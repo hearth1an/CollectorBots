@@ -6,17 +6,17 @@ using UnityEngine;
 public class Counter : MonoBehaviour
 {
     [SerializeField] private TMP_Text _text;
-    [SerializeField] private ItemSocket _socket;
+    //[SerializeField] private ItemSocket _socket;
 
     private int count = 0;
 
     private void Awake()
     {
         _text.text = count.ToString();
-        _socket.PlantDumped += UpdateCount;
+       // _socket.PlantDumped += UpdateCount;
     }
 
-    private void UpdateCount()
+    public void UpdateCount()
     {
         count++;
 

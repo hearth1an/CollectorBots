@@ -229,7 +229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _itemSocket: {fileID: 1791845474397801033}
-  _containers: {fileID: 0}
+  _containers: {fileID: 4712496331489573064, guid: dadd759ce2b54784e97e9448237231a8, type: 3}
 --- !u!195 &7493303281460121800
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -296,7 +296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0fc3b0f7a65d0c4ca32bb8bdf6fc710, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _container: {fileID: 0}
+  _container: {fileID: 4712496331489573064, guid: dadd759ce2b54784e97e9448237231a8, type: 3}
 --- !u!1 &3891533647681891775
 GameObject:
   m_ObjectHideFlags: 0

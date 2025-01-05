@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.AI;
@@ -8,7 +10,10 @@ using UnityEngine.AI;
 public class Collector : MonoBehaviour
 {
     [SerializeField] private ItemSocket _itemSocket;
-    [SerializeField] private Transform _containers;
+
+    public event Action <Plant>DumpedOk;
+
+    private Route _containers;
 
     private Vector3 _chillZone;
 
@@ -20,16 +25,21 @@ public class Collector : MonoBehaviour
 
     private void Awake()
     {
+        _containers = FindObjectOfType<Route>();
+
+        Debug.Log(_containers.transform.position);
         _chillZone = transform.position;
 
         _agent = GetComponent<NavMeshAgent>();
         _itemSocket.PlantCollected += ReturnToBase;
+
     }
 
     public void SetCollectTarget(Plant target)
     {
-        //_currentTarget = target;
+        _agent.ResetPath();
         _isBusy = true;
+
         _agent.SetDestination(target.transform.position);
 
         StartCoroutine(TryCollect(target));
@@ -49,6 +59,7 @@ public class Collector : MonoBehaviour
             if (IsPathEnding())
             {
                 _itemSocket.Collect(plant);
+
                 StopCoroutine(TryCollect(plant));
             }
 
@@ -58,9 +69,10 @@ public class Collector : MonoBehaviour
 
     private void ReturnToBase()
     {
-        Debug.Log("На базу");
+        Debug.Log("move to base");
         _agent.ResetPath();
-        _agent.SetDestination(_containers.position);
+       _agent.SetDestination(_containers.transform.position);
+       // _agent.SetDestination(_chillZone);
 
         StartCoroutine(TryUnload());
     }
@@ -80,6 +92,7 @@ public class Collector : MonoBehaviour
             if (IsPathEnding())
             {
                 _itemSocket.Dump();
+                DumpedOk?.Invoke(_itemSocket._currentPlant);
                 Chill();
                 StopCoroutine(TryUnload());
                 Debug.Log("С");
@@ -89,10 +102,4 @@ public class Collector : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-      // Debug.Log(_agent.destination);
-       Debug.Log(_agent.pathStatus);
-       //Debug.Log(_agent.hasPathdddd);
-    }
 }

@@ -7,11 +7,18 @@ public class ItemSocket : MonoBehaviour
 {
     [SerializeField] private Transform _container;
 
-    private Plant _currentPlant;
+    private Counter _counter;
+
+    public Plant _currentPlant;
     public bool IsOccupied { get; private set; } = false;
 
     public event Action PlantCollected;
     public event Action PlantDumped;
+
+    private void Awake()
+    {
+        _counter = FindObjectOfType<Counter>();
+    }
     public void Collect(Plant plant)
     {
         plant.transform.parent = _container.transform.parent;
@@ -19,7 +26,7 @@ public class ItemSocket : MonoBehaviour
         plant.transform.localScale = new Vector3(10, 10, 10);
 
         _currentPlant = plant;
-        _currentPlant.transform.localScale = new Vector3(10, 10, 10);
+       // _currentPlant.transform.localScale = new Vector3(10, 10, 10);
 
         IsOccupied = true;
 
@@ -30,6 +37,7 @@ public class ItemSocket : MonoBehaviour
     {
         Destroy(_currentPlant.gameObject);
         PlantDumped?.Invoke();
+        _counter.UpdateCount();
         IsOccupied = false;
         
     }
