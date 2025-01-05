@@ -36,28 +36,28 @@ public class Base : MonoBehaviour
     {
         int spawnedObjects = _plantsSpawner.CreatedObjects.Count;
 
-        Debug.Log(_unitSpawner.CreatedObjects.Count);        
+        Debug.Log(_plantsSpawner.CreatedObjects.Count);
 
-        for (int i = 0; i < _unitSpawner.CreatedObjects.Count+1; i++)
+        foreach (Collector collector in _unitSpawner.CreatedObjects)
         {
-            Plant plant = GetRandomTarget();
-            Collector collector = _unitSpawner.CreatedObjects[i];
+            Plant plant = GetRandomTarget();            
+
             collector.SetCollectTarget(plant);
+            _plantsSpawner.CreatedObjects.Remove(plant);
 
-            collector.DumpedOk += RemovePlant;
-
-           // _plantsSpawner.CreatedObjects.Remove(plant);
-        }
+            //collector.DumpedOk += RemovePlant;
+        }       
     }
 
     private void RemovePlant(Plant plant)
     {
-        _plantsSpawner.CreatedObjects.Remove(plant);
+        
+        Destroy(plant);
     }
 
     private Plant GetRandomTarget()
     {
-        int targetIndex = Random.RandomRange(0, _plantsSpawner.CreatedObjects.Count + 1);        
+        int targetIndex = Random.Range(0, _plantsSpawner.CreatedObjects.Count);        
 
         return _plantsSpawner.CreatedObjects[targetIndex];
     }

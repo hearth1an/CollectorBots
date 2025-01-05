@@ -9,7 +9,7 @@ public class ItemSocket : MonoBehaviour
 
     private Counter _counter;
 
-    public Plant _currentPlant;
+    public Plant _currentPlant = null;
     public bool IsOccupied { get; private set; } = false;
 
     public event Action PlantCollected;
@@ -19,6 +19,7 @@ public class ItemSocket : MonoBehaviour
     {
         _counter = FindObjectOfType<Counter>();
     }
+
     public void Collect(Plant plant)
     {
         plant.transform.parent = _container.transform.parent;
@@ -26,6 +27,7 @@ public class ItemSocket : MonoBehaviour
         plant.transform.localScale = new Vector3(10, 10, 10);
 
         _currentPlant = plant;
+        Debug.Log(_currentPlant.name);
        // _currentPlant.transform.localScale = new Vector3(10, 10, 10);
 
         IsOccupied = true;
@@ -35,10 +37,11 @@ public class ItemSocket : MonoBehaviour
 
     public void Dump()
     {
-        Destroy(_currentPlant.gameObject);
+        Debug.Log("Dump in socket");
         PlantDumped?.Invoke();
+        Destroy(_currentPlant.gameObject);
         _counter.UpdateCount();
-        IsOccupied = false;
-        
+
+        IsOccupied = false;        
     }
 }

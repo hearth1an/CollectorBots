@@ -35,29 +35,31 @@ public class Collector : MonoBehaviour
 
     }
 
-    public void SetCollectTarget(Plant target)
+    public void SetCollectTarget(Plant plant)
     {
         _agent.ResetPath();
         _isBusy = true;
 
-        _agent.SetDestination(target.transform.position);
+        _agent.SetDestination(plant.transform.position);
 
-        StartCoroutine(TryCollect(target));
+        StartCoroutine(TryCollect(plant));
     }
 
     private bool IsPathEnding()
     {
-        return _agent.hasPath && _agent.remainingDistance < 1f;
+        return _agent.hasPath && _agent.remainingDistance < 2.5f;
     }
     
     private IEnumerator TryCollect(Plant plant)
     {
         WaitForSeconds delay = new WaitForSeconds(1);
         
-        while (_itemSocket.IsOccupied != true)
+
+        while (enabled && _itemSocket.IsOccupied == false)
         {            
             if (IsPathEnding())
             {
+                Debug.Log("trying collect");
                 _itemSocket.Collect(plant);
 
                 StopCoroutine(TryCollect(plant));
@@ -70,9 +72,9 @@ public class Collector : MonoBehaviour
     private void ReturnToBase()
     {
         Debug.Log("move to base");
+
         _agent.ResetPath();
-       _agent.SetDestination(_containers.transform.position);
-       // _agent.SetDestination(_chillZone);
+        _agent.SetDestination(_containers.transform.position);      
 
         StartCoroutine(TryUnload());
     }
@@ -86,16 +88,17 @@ public class Collector : MonoBehaviour
     private IEnumerator TryUnload()
     {
         WaitForSeconds delay = new WaitForSeconds(1);
-
-        while (_itemSocket.IsOccupied)
+       
+        while (enabled && _itemSocket.IsOccupied)
         {
+            Debug.Log("Dumping2");
+            Debug.Log(IsPathEnding());
+
             if (IsPathEnding())
             {
+                Debug.Log("Dumping3");
                 _itemSocket.Dump();
-                DumpedOk?.Invoke(_itemSocket._currentPlant);
                 Chill();
-                StopCoroutine(TryUnload());
-                Debug.Log("Ñ");
             }
 
             yield return delay;
