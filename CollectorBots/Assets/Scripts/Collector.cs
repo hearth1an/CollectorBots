@@ -1,8 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using DG.Tweening;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,104 +8,92 @@ public class Collector : MonoBehaviour
 {
     [SerializeField] private ItemSocket _itemSocket;
 
-    public event Action <Plant> DumpedOk;
-    public event Action <Plant> Collected;
+    private DumpPlace _dumpPlace;
 
-    private Route _containers;
-
+    private int _taskDelay = 1;
+    private WaitForSeconds _delay;
     private Vector3 _chillZone;
-
     private NavMeshAgent _agent;
-
-    private Vector3 _currentTarget;
-
+    
     public bool IsBusy { get; private set; } = false;
 
-    private void Awake()
+    public event Action<Plant> Collected;
+
+    private void Start()
     {
-        _containers = FindObjectOfType<Route>();
-
-        Debug.Log(_containers.transform.position);
-        _chillZone = transform.position;
-
+        _delay = new WaitForSeconds(_taskDelay);
+        _chillZone = transform.position;        
         _agent = GetComponent<NavMeshAgent>();
-        _itemSocket.PlantCollected += ReturnToBase;
+        _dumpPlace = FindObjectOfType<DumpPlace>();
 
+        _itemSocket.PlantTaken += ReturnToBase;
+        _itemSocket.PlantDumped += _dumpPlace.UpdateCounter;
     }
 
-    public void SetCollectTarget(Plant plant)
+    private void OnDisable()
+    {
+        _itemSocket.PlantTaken -= ReturnToBase;
+        _itemSocket.PlantDumped -= _dumpPlace.UpdateCounter;
+    }
+
+    public void SetTarget(Plant plant)
     {       
         IsBusy = true;
-
-        _agent.ResetPath();
-        _agent.SetDestination(plant.transform.position);
-
-        StartCoroutine(TryCollect(plant));
+        GoTo(plant.transform.position);
+        StartCoroutine(CollectRoutine(plant));
     }
 
     private bool IsPathEnding()
     {
-        float minDistance = 3f;
+        float minDistance = 3;
 
         return _agent.hasPath && _agent.remainingDistance < minDistance;
-    }
-    
-    private IEnumerator TryCollect(Plant plant)
-    {
-        WaitForSeconds delay = new WaitForSeconds(1);
-        
-
-        while (enabled && _itemSocket.IsOccupied == false)
-        {            
-            if (IsPathEnding())
-            {
-                Debug.Log("trying collect");
-                _itemSocket.Collect(plant);
-                Collected?.Invoke(plant);
-                StopCoroutine(TryCollect(plant));
-            }
-
-            yield return delay;
-        }
     }
 
     private void ReturnToBase()
     {
-        Debug.Log("move to base");
-
-        _agent.ResetPath();
-        _agent.SetDestination(_containers.transform.position);      
-
-        StartCoroutine(TryUnload());
+        GoTo(_dumpPlace.transform.position);
+        StartCoroutine(DumpRoutine());
     }
 
-    private void Chill()
+    private void GoChill()
     {
-        
-        _agent.ResetPath();
-        _agent.SetDestination(_chillZone);
-        
+         StopAllCoroutines();
+         GoTo(_chillZone);       
     }
 
-    private IEnumerator TryUnload()
+    private void GoTo(Vector3 target)
     {
-        WaitForSeconds delay = new WaitForSeconds(1);
-       
-        while (enabled && _itemSocket.IsOccupied)
+        _agent.ResetPath();
+        _agent.SetDestination(target);
+    }
+
+    private IEnumerator CollectRoutine(Plant plant)
+    {
+        while (enabled && _itemSocket.IsOccupied == false)
         {
-            Debug.Log("Dumping2");
-            Debug.Log(IsPathEnding());
-
             if (IsPathEnding())
             {
-                Debug.Log("Dumping3");
-                _itemSocket.Dump();
-                IsBusy = false;
-                Chill();
+                _itemSocket.Collect(plant);
+                Collected?.Invoke(plant);
             }
 
-            yield return delay;
+            yield return _delay;
         }
     }
 
+    private IEnumerator DumpRoutine()
+    {    
+        while (enabled && _itemSocket.IsOccupied)
+        {
+            if (IsPathEnding())
+            {               
+                _itemSocket.Dump();
+                IsBusy = false;
+                GoChill();                
+            }
+
+            yield return _delay;
+        }
+    }
 }

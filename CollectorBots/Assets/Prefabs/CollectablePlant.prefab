@@ -103,6 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scannedFX: {fileID: 5625912569543729829}
+  _scanner: {fileID: 8770777028603527796, guid: 7a96b774fcd03264a9dd2c9ce70271e6, type: 3}
 --- !u!135 &5056021990894786892
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1015,7 +1016,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 10
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -1393,8 +1394,8 @@ ParticleSystem:
     curve:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1.5707963
-      minScalar: 0
+      scalar: 16.495106
+      minScalar: 4.0456734
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -3643,7 +3644,7 @@ ParticleSystem:
     curve:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.7853982
+      scalar: 3.0517082
       minScalar: 0.7853982
       maxCurve:
         serializedVersion: 2
@@ -4233,8 +4234,8 @@ ParticleSystem:
         - serializedVersion: 3
           time: 1
           value: 1
-          inSlope: 0
-          outSlope: 0
+          inSlope: 2
+          outSlope: 2
           tangentMode: 0
           weightedMode: 0
           inWeight: 0

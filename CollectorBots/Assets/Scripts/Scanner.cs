@@ -21,10 +21,12 @@ public class Scanner : MonoBehaviour
 
     private void PlayAnimation()
     {
+        AreaScanned?.Invoke();
+
         if (_particleSystem.isPlaying == false)
         {
             _particleSystem.Play();
-            AreaScanned?.Invoke();
+            
         }
     }
 }
