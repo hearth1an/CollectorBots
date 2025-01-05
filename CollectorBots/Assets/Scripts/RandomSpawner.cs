@@ -51,6 +51,12 @@ public abstract class RandomSpawner<T> : MonoBehaviour where T : MonoBehaviour
         }
     }
 
+    public virtual void UpdateSpawnCount(int count)
+    {
+        _maxSpawned = count;
+        StartCoroutine(SpawnRoutine());
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;

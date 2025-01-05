@@ -24,11 +24,12 @@ public class ItemSocket : MonoBehaviour
     {
         plant.transform.parent = _container.transform.parent;
         plant.transform.position = _container.transform.position;
-        plant.transform.localScale = new Vector3(10, 10, 10);
+        
 
         _currentPlant = plant;
+        _currentPlant.transform.localScale = new Vector3(10, 10, 10);
+
         Debug.Log(_currentPlant.name);
-       // _currentPlant.transform.localScale = new Vector3(10, 10, 10);
 
         IsOccupied = true;
 

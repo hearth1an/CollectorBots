@@ -8,6 +8,8 @@ public class Plant : MonoBehaviour
     [SerializeField] private ParticleSystem _scannedFX;
     private Scanner _scanner;
 
+    public bool IsScanned { get; private set; } = false;
+
     private void Awake()
     {
         _scannedFX.Stop();
@@ -22,6 +24,8 @@ public class Plant : MonoBehaviour
 
     private void InitScanned()
     {
+        IsScanned = true;
+        
         if (_scannedFX.isPlaying == false)
             _scannedFX.Play();
     }

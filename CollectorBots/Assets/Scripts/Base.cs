@@ -1,18 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Base : MonoBehaviour
 {
     [SerializeField] private UnitSpawner _unitSpawner;
-    [SerializeField] private Scanner _scanner;
-    [SerializeField] private Button _button;
     [SerializeField] private PlantSpawner _plantsSpawner;
-
-    private List<Plant> _foundPlants = new List<Plant>();
-    private float _scanRadius = 30f;
+    [SerializeField] private Scanner _scanner;
+    [SerializeField] private Button _button;  
 
     private void Awake()
     {
@@ -40,27 +36,14 @@ public class Base : MonoBehaviour
 
         foreach (Collector collector in _unitSpawner.CreatedObjects)
         {
-            Plant plant = GetRandomTarget();            
+            Plant plant = _plantsSpawner.GetRandomPlant();            
 
-            collector.SetCollectTarget(plant);
-            _plantsSpawner.CreatedObjects.Remove(plant);
-
-            //collector.DumpedOk += RemovePlant;
+            if (collector.IsBusy == false)
+            {
+                collector.SetCollectTarget(plant);
+                _plantsSpawner.CreatedObjects.Remove(plant);
+            }
+            
         }       
     }
-
-    private void RemovePlant(Plant plant)
-    {
-        
-        Destroy(plant);
-    }
-
-    private Plant GetRandomTarget()
-    {
-        int targetIndex = Random.Range(0, _plantsSpawner.CreatedObjects.Count);        
-
-        return _plantsSpawner.CreatedObjects[targetIndex];
-    }
-
-
 }

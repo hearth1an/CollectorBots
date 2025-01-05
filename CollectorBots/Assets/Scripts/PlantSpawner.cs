@@ -4,15 +4,32 @@ using UnityEngine;
 
 public class PlantSpawner : RandomSpawner<Plant>
 {
-    // Start is called before the first frame update
-    private void Awake()
+    public int ScannedCount { get; private set; } = 0;
+
+    public Plant GetRandomPlant()
     {
-        
+        Plant plant = null;
+
+        for (int i = 0; i < CreatedObjects.Count; i++)
+        {
+            int index = Random.Range(0, CreatedObjects.Count - 1);
+
+            if (CreatedObjects[index].IsScanned)
+            {
+                plant = CreatedObjects[index];
+            }
+        }
+
+        if (CreatedObjects.Count < 3)
+        {
+            UpdateSpawnCount(10);
+        }
+
+        return plant;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void RemoveObject(Plant plant)
     {
-        
+        CreatedObjects.Remove(plant);
     }
 }
