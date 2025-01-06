@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scannedFX: {fileID: 5625912569543729829}
-  _scanner: {fileID: 8770777028603527796, guid: 7a96b774fcd03264a9dd2c9ce70271e6, type: 3}
+  _base: {fileID: 4813958092860921903, guid: cf9a6c628bfd54b4c8fc076d9133e59e, type: 3}
 --- !u!135 &5056021990894786892
 SphereCollider:
   m_ObjectHideFlags: 0

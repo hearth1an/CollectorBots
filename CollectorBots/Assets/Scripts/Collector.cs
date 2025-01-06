@@ -6,6 +6,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class Collector : MonoBehaviour
 {
+    [SerializeField] private Base _base;
     [SerializeField] private ItemSocket _itemSocket;
 
     private DumpPlace _dumpPlace;
@@ -14,23 +15,24 @@ public class Collector : MonoBehaviour
     private WaitForSeconds _delay;
     private Vector3 _chillZone;
     private NavMeshAgent _agent;
-    
-    public bool IsBusy { get; private set; } = false;
 
     public event Action<Plant> Collected;
+
+    public bool IsBusy { get; private set; } = false;
 
     private void Start()
     {
         _delay = new WaitForSeconds(_taskDelay);
-        _chillZone = transform.position;        
+        _chillZone = transform.position;
+
+        _dumpPlace = _base.DumpPlace;
         _agent = GetComponent<NavMeshAgent>();
-        _dumpPlace = FindObjectOfType<DumpPlace>();
 
         _itemSocket.PlantTaken += ReturnToBase;
         _itemSocket.PlantDumped += _dumpPlace.UpdateCounter;
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         _itemSocket.PlantTaken -= ReturnToBase;
         _itemSocket.PlantDumped -= _dumpPlace.UpdateCounter;

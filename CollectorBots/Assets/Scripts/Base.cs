@@ -1,20 +1,26 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Base : MonoBehaviour
 {
     [SerializeField] private CollectorsSpawner _unitSpawner;
     [SerializeField] private PlantSpawner _plantsSpawner;
-    [SerializeField] private Button _button;
+    [SerializeField] private Scanner _scanner;
+    [SerializeField] private DumpPlace _dumpPlace;
+
+    public Scanner Scanner { get; private set; }
+    public DumpPlace DumpPlace { get; private set; }
 
     private void Awake()
-    {        
-        _button.onClick.AddListener(GiveTask);
+    {    
+        Scanner = _scanner;
+        DumpPlace = _dumpPlace;
+
+        _scanner.AreaScanned += GiveTask;
     }
 
     private void OnDisable()
     {
-        _button.onClick.RemoveListener(GiveTask);
+        _scanner.AreaScanned -= GiveTask;
     }
 
     private void GiveTask()
@@ -27,7 +33,11 @@ public class Base : MonoBehaviour
             {
                 collector.SetTarget(plant);
                 _plantsSpawner.CreatedObjects.Remove(plant);
-            }            
+            }
+            else
+            {
+                return;
+            }
         }       
     }
 }

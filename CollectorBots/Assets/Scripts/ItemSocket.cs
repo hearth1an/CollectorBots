@@ -6,10 +6,11 @@ public class ItemSocket : MonoBehaviour
     [SerializeField] private Transform _socket;
 
     public Plant _currentPlant = null;
-    public bool IsOccupied { get; private set; } = false;    
-
+    
     public event Action PlantTaken;
     public event Action PlantDumped;
+
+    public bool IsOccupied { get; private set; } = false;
 
     public void Collect(Plant plant)
     {

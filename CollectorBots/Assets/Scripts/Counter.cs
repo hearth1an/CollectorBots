@@ -5,17 +5,17 @@ public class Counter : MonoBehaviour
 {
     [SerializeField] private TMP_Text _text;
 
-    private int value = 0;
+    private int _value = 0;
 
     private void Awake()
     {
-        _text.text = value.ToString();
+        _text.text = _value.ToString();
     }
 
     public void UpdateValue()
     {
-         value++;
+         _value++;
 
-        _text.text = value.ToString();
+        _text.text = _value.ToString();
     }
 }

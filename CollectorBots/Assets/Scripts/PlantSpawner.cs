@@ -1,8 +1,7 @@
 using UnityEngine;
 
 public class PlantSpawner : ObjectSpawner<Plant>
-{
-    [SerializeField] private Scanner _scanner;
+{    
     [SerializeField] private int _minSpawned;
     [SerializeField] private int _newSpawnAmount;
 

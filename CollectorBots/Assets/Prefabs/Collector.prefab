@@ -5115,6 +5115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0013d08c0dafbcc4b88114ddb4ad8b74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _base: {fileID: 4813958092860921903, guid: cf9a6c628bfd54b4c8fc076d9133e59e, type: 3}
   _itemSocket: {fileID: 1791845474397801033}
 --- !u!195 &7493303281460121800
 NavMeshAgent:

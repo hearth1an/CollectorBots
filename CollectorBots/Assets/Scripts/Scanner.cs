@@ -1,22 +1,30 @@
 using System;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Scanner : MonoBehaviour
 {
     [SerializeField] private ParticleSystem _particleSystem;
-    [SerializeField] private Button _button;
+
+    private float _scanDelay = 10f;
 
     public event Action AreaScanned;
 
     private void Awake()
     {
-        _button.onClick.AddListener(PlayAnimation);
+        StartCoroutine(ScanRoutine());
     }
 
-    private void OnDisable()
+    private IEnumerator ScanRoutine()
     {
-        _button.onClick.RemoveListener(PlayAnimation);
+        WaitForSeconds delay = new WaitForSeconds(_scanDelay);
+
+        while (enabled)
+        {
+            PlayAnimation();
+
+            yield return delay;
+        }
     }
 
     private void PlayAnimation()
