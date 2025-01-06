@@ -4,6 +4,15 @@ public class PlantSpawner : ObjectSpawner<Plant>
 {    
     [SerializeField] private int _minSpawned;
     [SerializeField] private int _newSpawnAmount;
+    [SerializeField] private Base _base;
+
+    public override Plant GetObject()
+    {
+        Plant plant = Instantiate(Prefab, GetRandomPosition(), Quaternion.identity);
+        plant.Initialize(_base.Scanner);
+
+        return plant;
+    }
 
     public Plant GetRandomPlant()
     {

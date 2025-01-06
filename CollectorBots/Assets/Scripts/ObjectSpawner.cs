@@ -42,6 +42,8 @@ public abstract class ObjectSpawner<T> : MonoBehaviour where T : MonoBehaviour
         return transform.position;
     }
 
+    public abstract T GetObject();
+
     public virtual IEnumerator SpawnRoutine()
     {
         int spawned = 0;
@@ -49,8 +51,8 @@ public abstract class ObjectSpawner<T> : MonoBehaviour where T : MonoBehaviour
         WaitForSeconds delay = new WaitForSeconds(SpawnDelay);
 
         while (spawned < MaxSpawned)
-        {
-            var obj = Instantiate(Prefab, GetRandomPosition(), Quaternion.identity);
+        {            
+            var obj = GetObject();
             ObjectSpawned?.Invoke(obj);
             CreatedObjects.Add(obj);
 

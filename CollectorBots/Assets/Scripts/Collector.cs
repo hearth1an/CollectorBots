@@ -5,18 +5,17 @@ using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class Collector : MonoBehaviour
-{
-    [SerializeField] private Base _base;
+{    
     [SerializeField] private ItemSocket _itemSocket;
 
+    private Base _base;
     private DumpPlace _dumpPlace;
-
     private int _taskDelay = 1;
     private WaitForSeconds _delay;
     private Vector3 _chillZone;
     private NavMeshAgent _agent;
 
-    public event Action<Plant> Collected;
+    public event Action<Plant> Collected;    
 
     public bool IsBusy { get; private set; } = false;
 
@@ -37,6 +36,8 @@ public class Collector : MonoBehaviour
         _itemSocket.PlantTaken -= ReturnToBase;
         _itemSocket.PlantDumped -= _dumpPlace.UpdateCounter;
     }
+
+    public void Initialize(Base baseObject) => _base = baseObject;
 
     public void SetTarget(Plant plant)
     {       

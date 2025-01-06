@@ -19,9 +19,11 @@ public class Scanner : MonoBehaviour
     {
         WaitForSeconds delay = new WaitForSeconds(_scanDelay);
 
+        
+
         while (enabled)
         {
-            PlayAnimation();
+            PlayAnimation();            
 
             yield return delay;
         }
@@ -33,8 +35,7 @@ public class Scanner : MonoBehaviour
 
         if (_particleSystem.isPlaying == false)
         {
-            _particleSystem.Play();
-            
+            _particleSystem.Play();            
         }
     }
 }
