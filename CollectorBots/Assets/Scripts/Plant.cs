@@ -8,16 +8,16 @@ public class Plant : MonoBehaviour
 
     public bool IsScanned { get; private set; } = false;
 
-    private void Start()
+    private void Awake()
     {
         _scannedFX.Stop();
-        _scanner.AreaScanned += InitScanned;
+       // _scanner.AreaScanned += InitScanned;
 
     }
 
     private void OnDestroy()
     {
-        _scanner.AreaScanned -= InitScanned;
+       // _scanner.AreaScanned -= InitScanned;
     }
 
     public void Initialize(Scanner scanner)
@@ -25,7 +25,7 @@ public class Plant : MonoBehaviour
         _scanner = scanner;
     }
 
-    private void InitScanned()
+    public void InitScanned()
     {
         IsScanned = true;
         

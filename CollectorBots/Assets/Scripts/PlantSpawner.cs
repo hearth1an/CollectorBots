@@ -26,6 +26,7 @@ public class PlantSpawner : ObjectSpawner<Plant>
             if (CreatedObjects[index].IsScanned)
             {
                 plant = CreatedObjects[index];
+                CreatedObjects.Remove(plant);
             }
         }
 

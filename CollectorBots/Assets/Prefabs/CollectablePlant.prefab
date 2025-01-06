@@ -103,7 +103,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scannedFX: {fileID: 5625912569543729829}
-  _base: {fileID: 4813958092860921903, guid: cf9a6c628bfd54b4c8fc076d9133e59e, type: 3}
 --- !u!135 &5056021990894786892
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -119,7 +118,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -202,7 +201,7 @@ ParticleSystem:
   startDelay:
     serializedVersion: 2
     minMaxState: 0
-    scalar: 1.5
+    scalar: 0
     minScalar: 0
     maxCurve:
       serializedVersion: 2

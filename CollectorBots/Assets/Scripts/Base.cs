@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Base : MonoBehaviour
@@ -15,24 +16,38 @@ public class Base : MonoBehaviour
         Scanner = _scanner;
         DumpPlace = _dumpPlace;
 
-        _scanner.AreaScanned += GiveTask;
+        //_scanner.AreaScanned += GiveTask;
+
+        StartCoroutine(TaskRoutine());
+    }
+
+    private IEnumerator TaskRoutine()
+    {
+        WaitForSeconds delay = new WaitForSeconds(1);
+
+        while (enabled)
+        {
+            GiveTasks();
+            yield return delay;
+        }
     }
 
     private void OnDisable()
     {
-        _scanner.AreaScanned -= GiveTask;
+        _scanner.AreaScanned -= GiveTasks;
     }
 
-    private void GiveTask()
+    private void GiveTasks()
     {
+        //Debug.Log("Task");
+
         foreach (Collector collector in _unitSpawner.CreatedObjects)
         {
-            Plant plant = _plantsSpawner.GetRandomPlant();            
+            Plant plant = _plantsSpawner.GetRandomPlant();
 
             if (collector.IsBusy == false && plant != null)
             {
-                collector.SetTarget(plant);
-                _plantsSpawner.CreatedObjects.Remove(plant);
+                collector.SetTarget(plant);                
             }
             else
             {
