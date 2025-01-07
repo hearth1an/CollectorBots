@@ -10,7 +10,7 @@ public class Scanner : MonoBehaviour
 
     public event Action AreaScanned;
 
-    private void Awake()
+    private void Start()
     {
         StartCoroutine(ScanRoutine());
     }
@@ -20,27 +20,16 @@ public class Scanner : MonoBehaviour
         
         WaitForSeconds delay = new WaitForSeconds(_scanDelay);
 
-        
-
         while (enabled)
         {
+            //Debug.Log("Area scanned");
             AreaScanned?.Invoke();
             PlayAnimation();            
 
             yield return delay;
         }
     }
-
-    private void OnParticleCollision(GameObject other)
-    {
-        // Проверяем, есть ли у объекта компонент Plant
-        if (other.TryGetComponent<Plant>(out Plant plant))
-        {
-            Debug.Log(plant);
-            plant.InitScanned(); // Вызываем метод у Plant
-        }
-    }
-
+    
     private void PlayAnimation()
     {
         

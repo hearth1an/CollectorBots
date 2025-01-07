@@ -16,8 +16,6 @@ public class Base : MonoBehaviour
         Scanner = _scanner;
         DumpPlace = _dumpPlace;
 
-        //_scanner.AreaScanned += GiveTask;
-
         StartCoroutine(TaskRoutine());
     }
 
@@ -32,11 +30,6 @@ public class Base : MonoBehaviour
         }
     }
 
-    private void OnDisable()
-    {
-        _scanner.AreaScanned -= GiveTasks;
-    }
-
     private void GiveTasks()
     {
         //Debug.Log("Task");
@@ -44,6 +37,8 @@ public class Base : MonoBehaviour
         foreach (Collector collector in _unitSpawner.CreatedObjects)
         {
             Plant plant = _plantsSpawner.GetRandomPlant();
+
+            //Debug.Log(collector.IsBusy);
 
             if (collector.IsBusy == false && plant != null)
             {

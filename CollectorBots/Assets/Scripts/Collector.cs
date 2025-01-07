@@ -10,7 +10,7 @@ public class Collector : MonoBehaviour
 
     private Base _base;
     private DumpPlace _dumpPlace;
-    private int _taskDelay = 1;
+    private float _taskDelay = 0.5f;
     private WaitForSeconds _delay;
     private Vector3 _chillZone;
     private NavMeshAgent _agent;
@@ -61,8 +61,9 @@ public class Collector : MonoBehaviour
 
     private void GoChill()
     {
-         StopAllCoroutines();
-         GoTo(_chillZone);       
+        IsBusy = false;
+        // StopAllCoroutines();
+        GoTo(_chillZone);       
     }
 
     private void GoTo(Vector3 target)
@@ -93,7 +94,7 @@ public class Collector : MonoBehaviour
             {               
                 _itemSocket.Dump();
                 IsBusy = false;
-                GoChill();                
+                GoChill();               
             }
 
             yield return _delay;

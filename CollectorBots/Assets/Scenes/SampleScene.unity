@@ -6044,9 +6044,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Prefab: {fileID: -7126774827569635087, guid: 301263204507e8644924b5e8d25b88ee, type: 3}
   Radius: 2.5
-  SpawnDelay: 1
-  MaxSpawned: 10
-  _minSpawned: 3
+  SpawnDelay: 2
+  MaxSpawned: 1
+  _minSpawned: 0
   _newSpawnAmount: 5
   _base: {fileID: 1976767952}
 --- !u!1001 &961707147
