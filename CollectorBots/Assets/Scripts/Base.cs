@@ -8,15 +8,17 @@ public class Base : MonoBehaviour
     [SerializeField] private Scanner _scanner;
     [SerializeField] private DumpPlace _dumpPlace;
 
-    public Scanner Scanner { get; private set; }
-    public DumpPlace DumpPlace { get; private set; }
+    private Coroutine _taskRoutine;
+
+    public Scanner Scanner => _scanner;
+    public DumpPlace DumpPlace => _dumpPlace;
+
+    
 
     private void Awake()
-    {    
-        Scanner = _scanner;
-        DumpPlace = _dumpPlace;
-
-        StartCoroutine(TaskRoutine());
+    {
+        //StartCoroutine(TaskRoutine());
+        _scanner.AreaScanned += TryGiveTasks;
     }
 
     private IEnumerator TaskRoutine()
@@ -27,27 +29,42 @@ public class Base : MonoBehaviour
         {
             GiveTasks();
             yield return delay;
+
+            if (_unitSpawner.FreeCollectors == 0 || _plantsSpawner.ScannedCount == 0)
+            {
+                _taskRoutine = null;
+                yield break;
+            }
+
+        }
+    }
+
+    private void TryGiveTasks()
+    {
+        Debug.Log(_unitSpawner.FreeCollectors + " " + _plantsSpawner.ScannedCount);
+
+        if (_unitSpawner.FreeCollectors > 0 && _plantsSpawner.ScannedCount > 0)
+        {
+            if (_taskRoutine == null)
+            {
+                _taskRoutine = StartCoroutine(TaskRoutine());
+            }
         }
     }
 
     private void GiveTasks()
     {
-        //Debug.Log("Task");
-
         foreach (Collector collector in _unitSpawner.CreatedObjects)
         {
-            Plant plant = _plantsSpawner.GetRandomPlant();
-
-            //Debug.Log(collector.IsBusy);
-
-            if (collector.IsBusy == false && plant != null)
+            if (collector.IsBusy == false)
             {
-                collector.SetTarget(plant);                
+                Plant plant = _plantsSpawner.GetRandomPlant();
+
+                if (plant != null)
+                {
+                    collector.SetTarget(plant);
+                }
             }
-            else
-            {
-                return;
-            }
-        }       
+        }
     }
 }

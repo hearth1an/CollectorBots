@@ -7,10 +7,9 @@ public class Plant : MonoBehaviour
 
     public bool IsScanned { get; private set; } = false;
 
-    private void Awake()
+    private void Start()
     {
         _scannedFX.Stop();
-        Debug.Log(_scanner);
         _scanner.AreaScanned += InitScanned;
     }
 

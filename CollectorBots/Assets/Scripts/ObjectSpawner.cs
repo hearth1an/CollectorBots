@@ -51,14 +51,15 @@ public abstract class ObjectSpawner<T> : MonoBehaviour where T : MonoBehaviour
         WaitForSeconds delay = new WaitForSeconds(SpawnDelay);
 
         while (spawned < MaxSpawned)
-        {            
+        {
+
+            yield return delay;
+
             var obj = GetObject();
             ObjectSpawned?.Invoke(obj);
             CreatedObjects.Add(obj);
 
-            spawned++;
-
-            yield return delay;
+            spawned++;            
         }
     }
 

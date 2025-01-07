@@ -10,7 +10,7 @@ public class Collector : MonoBehaviour
 
     private Base _base;
     private DumpPlace _dumpPlace;
-    private float _taskDelay = 0.5f;
+    private float _taskDelay = 1f;
     private WaitForSeconds _delay;
     private Vector3 _chillZone;
     private NavMeshAgent _agent;
@@ -61,8 +61,8 @@ public class Collector : MonoBehaviour
 
     private void GoChill()
     {
-        IsBusy = false;
-        // StopAllCoroutines();
+        
+        StopAllCoroutines();
         GoTo(_chillZone);       
     }
 
