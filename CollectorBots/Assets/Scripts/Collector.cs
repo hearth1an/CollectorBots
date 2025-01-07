@@ -15,6 +15,7 @@ public class Collector : MonoBehaviour
     private Vector3 _chillZone;
     private NavMeshAgent _agent;
 
+
     public event Action<Plant> Collected;    
 
     public bool IsBusy { get; private set; } = false;
@@ -59,13 +60,6 @@ public class Collector : MonoBehaviour
         StartCoroutine(DumpRoutine());
     }
 
-    private void GoChill()
-    {
-        
-        StopAllCoroutines();
-        GoTo(_chillZone);       
-    }
-
     private void GoTo(Vector3 target)
     {
         _agent.ResetPath();
@@ -94,10 +88,10 @@ public class Collector : MonoBehaviour
             {               
                 _itemSocket.Dump();
                 IsBusy = false;
-                GoChill();               
+                GoTo(_chillZone);
             }
 
-            yield return _delay;
+            yield return _delay;            
         }
     }
 }

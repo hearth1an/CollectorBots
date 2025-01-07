@@ -8,29 +8,27 @@ public class Base : MonoBehaviour
     [SerializeField] private Scanner _scanner;
     [SerializeField] private DumpPlace _dumpPlace;
 
+    private float _taskDelay = 0.1f;
     private Coroutine _taskRoutine;
 
     public Scanner Scanner => _scanner;
     public DumpPlace DumpPlace => _dumpPlace;
 
-    
-
     private void Awake()
-    {
-        //StartCoroutine(TaskRoutine());
+    {        
         _scanner.AreaScanned += TryGiveTasks;
     }
 
     private IEnumerator TaskRoutine()
     {
-        WaitForSeconds delay = new WaitForSeconds(1);
+        WaitForSeconds delay = new WaitForSeconds(_taskDelay);
 
         while (enabled)
         {
             GiveTasks();
             yield return delay;
 
-            if (_unitSpawner.FreeCollectors == 0 || _plantsSpawner.ScannedCount == 0)
+            if (_unitSpawner.HasAvailableCollectors() || _plantsSpawner.AreUncollectedPlants())
             {
                 _taskRoutine = null;
                 yield break;
@@ -41,9 +39,7 @@ public class Base : MonoBehaviour
 
     private void TryGiveTasks()
     {
-        Debug.Log(_unitSpawner.FreeCollectors + " " + _plantsSpawner.ScannedCount);
-
-        if (_unitSpawner.FreeCollectors > 0 && _plantsSpawner.ScannedCount > 0)
+        if (_unitSpawner.HasAvailableCollectors() && _plantsSpawner.AreUncollectedPlants())
         {
             if (_taskRoutine == null)
             {

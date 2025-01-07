@@ -12,11 +12,24 @@ public abstract class ObjectSpawner<T> : MonoBehaviour where T : MonoBehaviour
 
     public event Action<T> ObjectSpawned;
 
-    public List<T> CreatedObjects { get; private set; } = new List<T>();
-   
+    private readonly List<T> _createdObjects = new List<T>();
+
+    public IReadOnlyList<T> CreatedObjects => _createdObjects;
+
     public virtual void Awake()
     {
         StartCoroutine(SpawnRoutine());
+    }
+
+    protected void RemoveObject(T obj)
+    {
+        _createdObjects.Remove(obj);
+    }
+
+    protected void AddObject(T obj)
+    {
+        _createdObjects.Add(obj);
+        ObjectSpawned?.Invoke(obj);
     }
 
     public virtual Vector3 GetRandomPosition()
@@ -56,8 +69,7 @@ public abstract class ObjectSpawner<T> : MonoBehaviour where T : MonoBehaviour
             yield return delay;
 
             var obj = GetObject();
-            ObjectSpawned?.Invoke(obj);
-            CreatedObjects.Add(obj);
+            AddObject(obj);
 
             spawned++;            
         }

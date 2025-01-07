@@ -1,21 +1,15 @@
-using TMPro;
+using System;
 using UnityEngine;
 
 public class Counter : MonoBehaviour
-{
-    [SerializeField] private TMP_Text _text;
+{   
+    public event Action<int> CountUpdated;
 
-    private int _value = 0;
+    public int Value { get; private set; } = 0;
 
-    private void Awake()
+    public void Add()
     {
-        _text.text = _value.ToString();
-    }
-
-    public void UpdateValue()
-    {
-         _value++;
-
-        _text.text = _value.ToString();
+        Value++;
+        CountUpdated?.Invoke(Value);
     }
 }

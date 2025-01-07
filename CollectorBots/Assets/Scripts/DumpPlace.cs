@@ -6,6 +6,6 @@ public class DumpPlace : MonoBehaviour
 
     public void UpdateCounter()
     {
-        _counter.UpdateValue();
+        _counter.Add();
     }
 }

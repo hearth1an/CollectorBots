@@ -6,8 +6,6 @@ public class PlantSpawner : ObjectSpawner<Plant>
     [SerializeField] private int _newSpawnAmount;
     [SerializeField] private Base _base;
 
-    public int ScannedCount => GetScannedCount();
-
     public override Plant GetObject()
     {
         Plant plant = Instantiate(Prefab, GetRandomPosition(), Quaternion.identity);
@@ -29,7 +27,7 @@ public class PlantSpawner : ObjectSpawner<Plant>
             if (CreatedObjects[index].IsScanned)
             {
                 plant = CreatedObjects[index];
-                CreatedObjects.Remove(plant);
+                RemoveObject(plant);
             }
         }
 
@@ -39,18 +37,16 @@ public class PlantSpawner : ObjectSpawner<Plant>
         return plant;
     }
 
-    private int GetScannedCount()
-    {
-        int count = 0;
-
+    public bool AreUncollectedPlants()
+    {    
         foreach (Plant plant in CreatedObjects)
         {
             if (plant.IsScanned)
             {
-                count++;
+                return true;
             }
         }
 
-        return count;
+        return false;
     }
 }
