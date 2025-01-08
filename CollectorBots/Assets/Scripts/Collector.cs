@@ -12,20 +12,7 @@ public class Collector : MonoBehaviour
     protected CollectorTaskHandler TaskHandler => _taskHandler;
 
     protected Base Base;
-    protected DumpPlace DumpPlace;    
-
-    private void Start()
-    {
-        //Debug.Log(DumpPlace);
-        //DumpPlace = Base.DumpPlace;
-        //Debug.Log(_dumpPlace.transform.position);
-        //_itemSocket.PlantDumped += DumpPlace.UpdateCounter; // тут
-    }
-
-    private void OnDestroy()
-    {        
-        //_itemSocket.PlantDumped -= DumpPlace.UpdateCounter;
-    }
+    protected DumpPlace DumpPlace;
 
     public bool IsDoingTask()
     {
