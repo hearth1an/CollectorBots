@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class Scanner : MonoBehaviour
+public class ScannerAnimController : MonoBehaviour
 {
     [SerializeField] private ParticleSystem _particleSystem;
 

@@ -3,7 +3,7 @@ using UnityEngine;
 public class Plant : MonoBehaviour
 {
     [SerializeField] private ParticleSystem _scannedFX;
-    [SerializeField] private Scanner _scanner;
+    [SerializeField] private ScannerAnimController _scanner;
 
     public bool IsScanned { get; private set; } = false;
 
@@ -18,7 +18,7 @@ public class Plant : MonoBehaviour
        _scanner.AreaScanned -= InitScanned;
     }
 
-    public void Initialize(Scanner scanner)
+    public void Initialize(ScannerAnimController scanner)
     {
         _scanner = scanner;
     }

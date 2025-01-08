@@ -16,7 +16,7 @@ public class CollectorsSpawner : ObjectSpawner<Collector>
     {
         foreach (Collector collector in CreatedObjects)
         {
-            if (collector.IsBusy == false)
+            if (collector.IsDoingTask() == false)
             {
                 return true;
             }

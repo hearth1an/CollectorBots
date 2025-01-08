@@ -21,5 +21,4 @@ public class View : MonoBehaviour
     {
         _text.text = _counter.Value.ToString();
     }
-
 }

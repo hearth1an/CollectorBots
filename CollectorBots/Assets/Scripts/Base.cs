@@ -5,18 +5,25 @@ public class Base : MonoBehaviour
 {
     [SerializeField] private CollectorsSpawner _unitSpawner;
     [SerializeField] private PlantSpawner _plantsSpawner;
-    [SerializeField] private Scanner _scanner;
+    [SerializeField] private ScannerAnimController _scanner;
     [SerializeField] private DumpPlace _dumpPlace;
 
     private float _taskDelay = 0.1f;
     private Coroutine _taskRoutine;
 
-    public Scanner Scanner => _scanner;
+    public ScannerAnimController Scanner => _scanner;
     public DumpPlace DumpPlace => _dumpPlace;
 
     private void Awake()
-    {        
+    {
+        
+
         _scanner.AreaScanned += TryGiveTasks;
+    }
+
+    private void OnDestroy()
+    {
+        _scanner.AreaScanned -= TryGiveTasks;
     }
 
     private IEnumerator TaskRoutine()
@@ -52,7 +59,7 @@ public class Base : MonoBehaviour
     {
         foreach (Collector collector in _unitSpawner.CreatedObjects)
         {
-            if (collector.IsBusy == false)
+            if (collector.IsDoingTask() == false)
             {
                 Plant plant = _plantsSpawner.GetRandomPlant();
 
