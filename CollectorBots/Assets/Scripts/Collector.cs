@@ -16,8 +16,8 @@ public class Collector : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log(DumpPlace);
-        DumpPlace = Base.DumpPlace;
+        //Debug.Log(DumpPlace);
+        //DumpPlace = Base.DumpPlace;
         //Debug.Log(_dumpPlace.transform.position);
         //_itemSocket.PlantDumped += DumpPlace.UpdateCounter; // тут
     }
@@ -35,7 +35,8 @@ public class Collector : MonoBehaviour
     public void Initialize(Base baseObject)
     {
         Base = baseObject;
-        
+        Debug.Log(DumpPlace);
+
     }
 
     public void SetTarget(Plant plant)

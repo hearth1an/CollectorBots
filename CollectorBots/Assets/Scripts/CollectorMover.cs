@@ -30,8 +30,6 @@ public class CollectorMover : Collector
         float minDistance = 3;
         return _agent.hasPath && _agent.remainingDistance < minDistance;
     }
-
-    
     
     protected void ReturnToBase()
     {
@@ -42,6 +40,4 @@ public class CollectorMover : Collector
     {
         GoTo(_chillZone);
     }
-
-    
 }
