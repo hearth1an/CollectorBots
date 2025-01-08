@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Counter : MonoBehaviour
+public class ResourcesCounter : MonoBehaviour
 {   
     public event Action<int> CountUpdated;
 

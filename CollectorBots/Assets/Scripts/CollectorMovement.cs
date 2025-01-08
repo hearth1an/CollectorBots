@@ -4,6 +4,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class CollectorMovement : MonoBehaviour
 {
+    private float _minDistance = 3f;
     private NavMeshAgent _agent;
 
     private void Awake()
@@ -19,7 +20,6 @@ public class CollectorMovement : MonoBehaviour
 
     public bool IsPathEnding()
     {
-        float minDistance = 3;
-        return _agent.hasPath && _agent.remainingDistance < minDistance;
+        return _agent.hasPath && _agent.remainingDistance < _minDistance;
     }
 }

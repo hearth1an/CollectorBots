@@ -1,10 +1,10 @@
 using UnityEngine;
 using TMPro;
 
-public class View : MonoBehaviour
+public class ResourcesView : MonoBehaviour
 {
     [SerializeField] private TMP_Text _text;
-    [SerializeField] private Counter _counter;
+    [SerializeField] private ResourcesCounter _counter;
 
     private void Awake()
     {

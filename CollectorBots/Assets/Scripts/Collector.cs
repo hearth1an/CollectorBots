@@ -17,6 +17,8 @@ public class Collector : MonoBehaviour
 
     public event Action<Plant> Collected;
 
+    public void Initialize(Base baseObject) => _base = baseObject;
+
     private void Awake()
     {
         _movement = GetComponent<CollectorMovement>();
@@ -37,9 +39,7 @@ public class Collector : MonoBehaviour
     {
         _itemSocket.PlantTaken -= ReturnToBase;
         _itemSocket.PlantDumped -= _dumpPlace.UpdateCounter;
-    }
-
-    public void Initialize(Base baseObject) => _base = baseObject;
+    }    
 
     public void SetTarget(Plant plant)
     {
