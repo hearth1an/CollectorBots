@@ -16,12 +16,25 @@ public class Base : MonoBehaviour
 
     private void Awake()
     {
+        foreach (Collector collector in _unitSpawner.CreatedObjects)
+        {
+            collector.ResourceCollector.Dumped += OnDumped;
+        }
+
         _scanner.AreaScanned += TryGiveTasks;
+    }
+
+    private void OnDumped()
+    {        
+        _dumpPlace.UpdateCounter();
     }
 
     private void OnDestroy()
     {
-        _scanner.AreaScanned -= TryGiveTasks;
+        foreach (Collector collector in _unitSpawner.CreatedObjects)
+        {
+            collector.ResourceCollector.Dumped -= OnDumped;
+        }
     }
 
     private IEnumerator TaskRoutine()
@@ -57,7 +70,7 @@ public class Base : MonoBehaviour
     {
         foreach (Collector collector in _unitSpawner.CreatedObjects)
         {
-            if (collector.IsDoingTask() == false)
+            if (collector.IsBusy == false)
             {
                 Plant plant = _plantsSpawner.GetRandomPlant();
 

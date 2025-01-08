@@ -1,22 +1,16 @@
 using System;
 using UnityEngine;
 
-public class ItemSocket : Collector
+public class ItemSocket : MonoBehaviour
 {
     [SerializeField] private Transform _socket;
 
-    private Counter _counter => Base.DumpPlace.Counter;
-    private Plant _currentPlant = null;
+    public Plant _currentPlant = null;
     
     public event Action PlantTaken;
     public event Action PlantDumped;
 
     public bool IsOccupied { get; private set; } = false;
-
-    private void Start()
-    {
-        //_counter = Base.DumpPlace.Counter;        
-    }
 
     public void Collect(Plant plant)
     {
@@ -36,8 +30,6 @@ public class ItemSocket : Collector
         PlantDumped?.Invoke();
 
         Destroy(_currentPlant.gameObject);
-
-        _counter.Add();
 
         IsOccupied = false;        
     }

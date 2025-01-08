@@ -1,35 +1,54 @@
 using UnityEngine;
+using System;
 
-
+[RequireComponent(typeof(CollectorMovement))]
 public class Collector : MonoBehaviour
-{    
+{
     [SerializeField] private ItemSocket _itemSocket;
-    [SerializeField] private CollectorMover _collectorMover;
-    [SerializeField] private CollectorTaskHandler _taskHandler;
-    
-    protected CollectorMover Mover => _collectorMover;
-    protected ItemSocket Socket => _itemSocket;
-    protected CollectorTaskHandler TaskHandler => _taskHandler;
 
-    protected Base Base;
-    protected DumpPlace DumpPlace;
+    private Base _base;
+    private DumpPlace _dumpPlace;
+    private CollectorMovement _movement;
+    private ResourceCollector _resourceCollector;
 
-    public bool IsDoingTask()
+    public ResourceCollector ResourceCollector => _resourceCollector;
+
+    public bool IsBusy => _resourceCollector.IsBusy;
+
+    public event Action<Plant> Collected;
+
+    private void Awake()
     {
-        return TaskHandler.IsBusy;
+        _movement = GetComponent<CollectorMovement>();
+        _resourceCollector = new ResourceCollector(_itemSocket, this);
     }
 
-    public void Initialize(Base baseObject)
+    private void Start()
     {
-        Base = baseObject;
-        DumpPlace = baseObject.DumpPlace;
-        Debug.Log(DumpPlace);
+        _dumpPlace = _base.DumpPlace;
 
+        _itemSocket.PlantTaken += ReturnToBase;
+        _itemSocket.PlantDumped += _dumpPlace.UpdateCounter;
+
+        _resourceCollector.Collected += plant => Collected?.Invoke(plant);
     }
+
+    private void OnDestroy()
+    {
+        _itemSocket.PlantTaken -= ReturnToBase;
+        _itemSocket.PlantDumped -= _dumpPlace.UpdateCounter;
+    }
+
+    public void Initialize(Base baseObject) => _base = baseObject;
 
     public void SetTarget(Plant plant)
-    {    
-        Mover.GoTo(plant.transform.position);
-        TaskHandler.TaskCollect(plant);
-    }  
+    {
+        _resourceCollector.SetTarget(plant, _movement);
+    }
+
+    private void ReturnToBase()
+    {
+        _movement.GoTo(_dumpPlace.transform.position);
+        _resourceCollector.StartDumping(_dumpPlace, _movement);
+    }
 }
