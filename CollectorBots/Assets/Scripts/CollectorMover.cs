@@ -33,7 +33,8 @@ public class CollectorMover : Collector
     
     protected void ReturnToBase()
     {
-        GoTo(Base.DumpPlace.gameObject.transform.position);
+        Debug.Log(DumpPlace);
+        GoTo(DumpPlace.transform.position);
     }
 
     public void GoChill()

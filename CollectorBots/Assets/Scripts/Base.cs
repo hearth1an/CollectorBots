@@ -16,8 +16,6 @@ public class Base : MonoBehaviour
 
     private void Awake()
     {
-        
-
         _scanner.AreaScanned += TryGiveTasks;
     }
 
