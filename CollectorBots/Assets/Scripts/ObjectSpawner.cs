@@ -21,11 +21,6 @@ public abstract class ObjectSpawner<T> : MonoBehaviour where T : MonoBehaviour
         StartCoroutine(SpawnRoutine());
     }
 
-    protected void RemoveObject(T obj)
-    {
-        _createdObjects.Remove(obj);
-    }
-
     protected void AddObject(T obj)
     {
         _createdObjects.Add(obj);

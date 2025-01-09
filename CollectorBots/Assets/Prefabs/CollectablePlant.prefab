@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -7126774827569635087}
   - component: {fileID: 5056021990894786892}
   - component: {fileID: 682462640768825151}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: CollectablePlant
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,6 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scannedFX: {fileID: 5625912569543729829}
+  _scanner: {fileID: 0}
 --- !u!135 &5056021990894786892
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -4,49 +4,17 @@ public class PlantSpawner : ObjectSpawner<Plant>
 {    
     [SerializeField] private int _minSpawned;
     [SerializeField] private int _newSpawnAmount;
-    [SerializeField] private Base _base;
 
     public override Plant GetObject()
     {
-        Plant plant = Instantiate(Prefab, GetRandomPosition(), Quaternion.identity);
-        plant.Initialize(_base.Scanner);
+        TrySpawnNew();
 
-        return plant;
+        return Instantiate(Prefab, GetRandomPosition(), Quaternion.identity);
     }
 
-    public Plant GetRandomPlant()
+    private void TrySpawnNew()
     {
-        Plant plant = null;
-
-        int minValue = 0;
-
-        for (int i = 0; i < CreatedObjects.Count; i++)
-        {
-            int index = Random.Range(minValue, CreatedObjects.Count);
-
-            if (CreatedObjects[index].IsScanned)
-            {
-                plant = CreatedObjects[index];
-                RemoveObject(plant);
-            }
-        }
-
         if (CreatedObjects.Count < _minSpawned)
             SpawnNew(_newSpawnAmount);
-
-        return plant;
-    }
-
-    public bool AreUncollectedPlants()
-    {    
-        foreach (Plant plant in CreatedObjects)
-        {
-            if (plant.IsScanned)
-            {
-                return true;
-            }
-        }
-
-        return false;
     }
 }

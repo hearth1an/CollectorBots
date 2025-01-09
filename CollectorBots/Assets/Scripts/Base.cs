@@ -1,82 +1,43 @@
-using System.Collections;
 using UnityEngine;
 
 public class Base : MonoBehaviour
 {
-    [SerializeField] private CollectorsSpawner _unitSpawner;
-    [SerializeField] private PlantSpawner _plantsSpawner;
-    [SerializeField] private ScannerAnimController _scanner;
+    [SerializeField] private Scanner _scanner;
+    [SerializeField] private ScannerAnimController _animController;
+    [SerializeField] private CollectorsSpawner _collectorsSpawner;
     [SerializeField] private DumpPlace _dumpPlace;
 
-    private float _taskDelay = 0.1f;
-    private Coroutine _taskRoutine;
-
-    public ScannerAnimController Scanner => _scanner;
     public DumpPlace DumpPlace => _dumpPlace;
+    public Scanner Scanner => _scanner;
 
-    private void Awake()
+    private void Start()
     {
-        foreach (Collector collector in _unitSpawner.CreatedObjects)
-        {
-            collector.ResourceCollector.Dumped += OnDumped;
-        }
-
-        _scanner.AreaScanned += TryGiveTasks;
-    }
-
-    private void OnDumped()
-    {        
-        _dumpPlace.UpdateCounter();
+        _scanner.ResourcesDetected += AssignResourcesToBots;
     }
 
     private void OnDestroy()
     {
-        foreach (Collector collector in _unitSpawner.CreatedObjects)
-        {
-            collector.ResourceCollector.Dumped -= OnDumped;
-        }
+        _scanner.ResourcesDetected -= AssignResourcesToBots;
     }
 
-    private IEnumerator TaskRoutine()
+    private void AssignResourcesToBots(Plant[] plants)
     {
-        WaitForSeconds delay = new WaitForSeconds(_taskDelay);
+        if (plants.Length == 0) return;
 
-        while (enabled)
+        _animController.PlayAnimation();
+
+        foreach (Collector collector in _collectorsSpawner.CreatedObjects)
         {
-            GiveTasks();
-            yield return delay;
-
-            if (_unitSpawner.HasAvailableCollectors() || _plantsSpawner.AreUncollectedPlants())
+            if (!collector.IsBusy)
             {
-                _taskRoutine = null;
-                yield break;
-            }
-
-        }
-    }
-
-    private void TryGiveTasks()
-    {
-        if (_unitSpawner.HasAvailableCollectors() && _plantsSpawner.AreUncollectedPlants())
-        {
-            if (_taskRoutine == null)
-            {
-                _taskRoutine = StartCoroutine(TaskRoutine());
-            }
-        }
-    }
-
-    private void GiveTasks()
-    {
-        foreach (Collector collector in _unitSpawner.CreatedObjects)
-        {
-            if (collector.IsBusy == false)
-            {
-                Plant plant = _plantsSpawner.GetRandomPlant();
-
-                if (plant != null)
+                foreach (Plant plant in plants)
                 {
-                    collector.SetTarget(plant);
+                    if (plant.IsScanned == false)
+                    {
+                        plant.MarkAsScanned();
+                        collector.SetTarget(plant);
+                        break;
+                    }
                 }
             }
         }
