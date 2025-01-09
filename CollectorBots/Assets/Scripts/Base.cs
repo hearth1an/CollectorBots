@@ -3,7 +3,6 @@ using UnityEngine;
 public class Base : MonoBehaviour
 {
     [SerializeField] private Scanner _scanner;
-    [SerializeField] private ScannerAnimController _animController;
     [SerializeField] private CollectorsSpawner _collectorsSpawner;
     [SerializeField] private DumpPlace _dumpPlace;
 
@@ -22,9 +21,7 @@ public class Base : MonoBehaviour
 
     private void AssignResourcesToBots(Plant[] plants)
     {
-        if (plants.Length == 0) return;
-
-        _animController.PlayAnimation();
+        if (plants.Length == 0) return;        
 
         foreach (Collector collector in _collectorsSpawner.CreatedObjects)
         {
