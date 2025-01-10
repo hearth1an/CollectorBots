@@ -70,7 +70,7 @@ public abstract class ObjectSpawner<T> : MonoBehaviour where T : MonoBehaviour
         }
     }
 
-    public virtual void SpawnNew(int count)
+    public virtual void Spawn(int count)
     {
         MaxSpawned = count;
         StartCoroutine(SpawnRoutine());

@@ -18,7 +18,7 @@ public class CollectorMovement : MonoBehaviour
         _agent.SetDestination(target);
     }
 
-    public bool IsPathEnding()
+    public bool IsPathComplete()
     {
         return _agent.hasPath && _agent.remainingDistance < _minDistance;
     }

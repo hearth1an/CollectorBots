@@ -7,7 +7,7 @@ public class Scanner : MonoBehaviour
     [SerializeField] private float _scanRadius = 10f;
     [SerializeField] private LayerMask _resourceLayer;
     [SerializeField] private float _scanDelay = 5f;
-    [SerializeField] private ScannerAnimController _animController;
+    [SerializeField] private ScannerAnimatorController _animController;
 
     public event Action<Plant[]> ResourcesDetected;
 

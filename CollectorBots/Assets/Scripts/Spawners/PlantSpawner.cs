@@ -15,6 +15,6 @@ public class PlantSpawner : ObjectSpawner<Plant>
     private void TrySpawnNew()
     {
         if (CreatedObjects.Count < _minSpawned)
-            SpawnNew(_newSpawnAmount);
+            Spawn(_newSpawnAmount);
     }
 }

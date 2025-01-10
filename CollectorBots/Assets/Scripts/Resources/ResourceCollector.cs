@@ -34,7 +34,7 @@ public class ResourceCollector
     {
         while (_itemSocket.IsOccupied == false)
         {
-            if (movement.IsPathEnding())
+            if (movement.IsPathComplete())
             {
                 _itemSocket.Collect(plant);
                 Collected?.Invoke(plant);
@@ -54,7 +54,7 @@ public class ResourceCollector
     {
         while (_itemSocket.IsOccupied)
         {
-            if (movement.IsPathEnding())
+            if (movement.IsPathComplete())
             {
                 _itemSocket.Dump();
                 Dumped?.Invoke();
