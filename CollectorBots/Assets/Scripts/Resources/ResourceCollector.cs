@@ -5,7 +5,7 @@ using UnityEngine;
 public class ResourceCollector
 {
     private ItemSocket _itemSocket;
-    private MonoBehaviour _owner;
+    private ICoroutineRunner _coroutineRunner;
 
     private float _taskDelay = 1f;
     private WaitForSeconds _delay;
@@ -16,18 +16,18 @@ public class ResourceCollector
     public event Action<Plant> Collected;
     public event Action Dumped;
 
-    public ResourceCollector(ItemSocket itemSocket, MonoBehaviour owner)
+    public ResourceCollector(ItemSocket itemSocket, ICoroutineRunner coroutineRunner)
     {
         _itemSocket = itemSocket;
-        _owner = owner;
+        _coroutineRunner = coroutineRunner;
         _delay = new WaitForSeconds(_taskDelay);
     }
 
     public void SetTarget(Plant plant, CollectorMovement movement)
-    {
+    {       
         _isBusy = true;
         movement.GoTo(plant.transform.position);
-        _owner.StartCoroutine(CollectRoutine(plant, movement));
+        _coroutineRunner.StartCoroutine(CollectRoutine(plant, movement));
     }
 
     private IEnumerator CollectRoutine(Plant plant, CollectorMovement movement)
@@ -47,7 +47,7 @@ public class ResourceCollector
 
     public void StartDumping(DumpPlace dumpPlace, CollectorMovement movement)
     {
-        _owner.StartCoroutine(DumpRoutine(dumpPlace, movement));
+        _coroutineRunner.StartCoroutine(DumpRoutine(dumpPlace, movement));
     }
 
     private IEnumerator DumpRoutine(DumpPlace dumpPlace, CollectorMovement movement)

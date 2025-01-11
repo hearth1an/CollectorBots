@@ -2,6 +2,7 @@ using System.Collections;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public abstract class ObjectSpawner<T> : MonoBehaviour where T : MonoBehaviour
 {
@@ -52,28 +53,21 @@ public abstract class ObjectSpawner<T> : MonoBehaviour where T : MonoBehaviour
 
     public abstract T GetObject();
 
-    public virtual IEnumerator SpawnRoutine()
-    {
-        int spawned = 0;
-
-        WaitForSeconds delay = new WaitForSeconds(SpawnDelay);
-
-        while (spawned < MaxSpawned)
-        {
-
-            yield return delay;
-
-            var obj = GetObject();
-            AddObject(obj);
-
-            spawned++;            
-        }
-    }
+    public abstract IEnumerator SpawnRoutine();
+    
 
     public virtual void Spawn(int count)
     {
         MaxSpawned = count;
         StartCoroutine(SpawnRoutine());
+    }
+
+    protected void RemoveObject(T obj)
+    {
+        if (CreatedObjects.Contains(obj))
+        {
+            _createdObjects.Remove(obj);
+        }
     }
 
     private void OnDrawGizmos()

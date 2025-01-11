@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 
 [RequireComponent(typeof(CollectorMovement))]
-public class Collector : MonoBehaviour
+public class Collector : MonoBehaviour, ICoroutineRunner
 {
     [SerializeField] private ItemSocket _itemSocket;
 

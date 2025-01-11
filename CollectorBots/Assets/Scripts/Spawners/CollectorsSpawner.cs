@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class CollectorsSpawner : ObjectSpawner<Collector>
 {
@@ -10,6 +11,23 @@ public class CollectorsSpawner : ObjectSpawner<Collector>
         collector.Initialize(_base);
 
         return collector;
+    }
+
+    public override IEnumerator SpawnRoutine()
+    {
+        int spawned = 0;
+
+        WaitForSeconds delay = new WaitForSeconds(SpawnDelay);
+
+        while (spawned < MaxSpawned)
+        {
+            yield return delay;
+
+            var obj = GetObject();
+            AddObject(obj);
+
+            spawned++;
+        }
     }
 
     public bool HasAvailableCollectors()
