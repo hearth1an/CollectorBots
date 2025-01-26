@@ -56,6 +56,11 @@ public class Target : MonoBehaviour
         }
     }
 
+    public Flag GetFlagPosition()
+    {
+        return _currentFlag;
+    }
+
     private bool TryPlaceFlag()
     {
         Vector3? position = GetClickPositionOnGround();

@@ -46,6 +46,11 @@ public class Collector : MonoBehaviour, ICoroutineRunner
         _resourceCollector.SetTarget(plant, _movement);
     }
 
+    public void SetBuildingTarget(Flag flag)
+    {
+        _resourceCollector.SetBuildTarget(flag, _movement);
+    }
+
     private void ReturnToBase()
     {
         _movement.GoTo(_dumpPlace.transform.position);

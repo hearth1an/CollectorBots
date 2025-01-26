@@ -4,6 +4,7 @@ using UnityEngine;
 public class ResourcesCounter : MonoBehaviour
 {
     [SerializeField] private int _collectorPrice = 3;
+    [SerializeField] private int _basePrice = 5;
 
     public event Action<int> CountUpdated;
 
@@ -21,6 +22,16 @@ public class ResourcesCounter : MonoBehaviour
         {
             return true;
         }            
+
+        return false;
+    }
+
+    public bool HaveResourcesForBase()
+    {
+        if (Value >= _basePrice)
+        {
+            return true;
+        }
 
         return false;
     }

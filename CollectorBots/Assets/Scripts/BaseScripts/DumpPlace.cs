@@ -6,6 +6,7 @@ public class DumpPlace : MonoBehaviour
     [SerializeField] private ResourcesCounter _counter;
 
     public event Action CollectorPriceCollected;
+    public event Action BasePriceCollected;
 
     private bool _isHaveToPay = true;
 
@@ -17,6 +18,11 @@ public class DumpPlace : MonoBehaviour
         {
             CollectorPriceCollected?.Invoke();
             _counter.PayForCollector();
+        }
+
+        if (_counter.HaveResourcesForBase())
+        {
+            BasePriceCollected?.Invoke();
         }
     }
 

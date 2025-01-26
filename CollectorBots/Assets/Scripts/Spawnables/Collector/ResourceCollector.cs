@@ -3,15 +3,17 @@ using System.Collections;
 using UnityEngine;
 
 public class ResourceCollector
-{
+{   
     private ItemSocket _itemSocket;
     private ICoroutineRunner _coroutineRunner;
 
     private float _taskDelay = 1f;
     private WaitForSeconds _delay;
     private bool _isBusy;
+    private bool _isBuilding;
 
     public bool IsBusy => _isBusy;
+    public bool IsBuilding => _isBuilding;
 
     public event Action<Plant> Collected;
     public event Action Dumped;
@@ -30,6 +32,15 @@ public class ResourceCollector
         _coroutineRunner.StartCoroutine(CollectRoutine(plant, movement));
     }
 
+    public void SetBuildTarget(Flag flag, CollectorMovement movement)
+    {
+        _isBusy = true;
+        _isBuilding = true;
+        movement.GoTo(flag.transform.position);
+
+        _coroutineRunner.StartCoroutine(BuildRoutine(flag, movement));
+    }
+
     private IEnumerator CollectRoutine(Plant plant, CollectorMovement movement)
     {
         while (_itemSocket.IsOccupied == false)
@@ -39,6 +50,20 @@ public class ResourceCollector
                 _itemSocket.Collect(plant);
                 Collected?.Invoke(plant);
                 break;
+            }
+
+            yield return _delay;
+        }
+    }
+
+    private IEnumerator BuildRoutine(Flag flag, CollectorMovement movement)
+    {   
+        while (flag.IsBuilt == false)
+        {
+            if (movement.IsPathComplete())
+            {
+                Debug.Log("Build!!!!");
+                flag.BuildBase();
             }
 
             yield return _delay;

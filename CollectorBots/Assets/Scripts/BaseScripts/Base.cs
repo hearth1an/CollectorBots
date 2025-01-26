@@ -5,6 +5,7 @@ public class Base : MonoBehaviour
     [SerializeField] private Scanner _scanner;
     [SerializeField] private CollectorsSpawner _collectorsSpawner;
     [SerializeField] private DumpPlace _dumpPlace;
+    [SerializeField] private Target _target;
 
     public DumpPlace DumpPlace => _dumpPlace;
     public Scanner Scanner => _scanner;
@@ -12,11 +13,19 @@ public class Base : MonoBehaviour
     private void Start()
     {
         _scanner.ResourcesDetected += AssignResourcesToBots;
+        _dumpPlace.BasePriceCollected += AssignBuildBase;
     }
 
     private void OnDestroy()
     {
         _scanner.ResourcesDetected -= AssignResourcesToBots;
+        _dumpPlace.BasePriceCollected -= AssignBuildBase;
+    }
+
+    private void AssignBuildBase()
+    {
+        _collectorsSpawner.CreatedObjects[0].SetBuildingTarget(_target.GetFlagPosition());
+
     }
 
     private void AssignResourcesToBots(Plant[] plants)

@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class Flag : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private Base _basePrefab;
 
-    // Update is called once per frame
-    void Update()
+    public bool IsBuilt { get; private set; } = false;
+
+    public void BuildBase()
     {
-        
+        Debug.Log("Building");
+        Instantiate(_basePrefab, gameObject.transform.position, Quaternion.identity);
+
+        //builtBase.transform.rotation = _basePrefab.transform.rotation;
+
+        IsBuilt = true;
     }
 }
