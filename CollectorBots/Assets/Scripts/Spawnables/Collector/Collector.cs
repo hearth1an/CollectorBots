@@ -47,6 +47,9 @@ public class Collector : MonoBehaviour, ICoroutineRunner
         _base = newBase;
         _dumpPlace = newBase.DumpPlace;
 
+        _itemSocket.PlantDumped -= _dumpPlace.UpdateCounter;
+        _itemSocket.PlantDumped += _dumpPlace.UpdateCounter;
+
         Debug.Log(_dumpPlace.gameObject.name);
 
         Debug.Log(_base.gameObject.name);

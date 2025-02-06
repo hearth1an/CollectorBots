@@ -15,7 +15,12 @@ public class Target : MonoBehaviour
 
     private void Awake()
     {
-        _color = _renderer.material.color;
+        _color = _renderer.material.color;        
+    }
+
+    private void OnDestroy()
+    {
+        _currentFlag.FlagDestroyed -= FlagDestroyed;
     }
 
     private void OnMouseEnter()
@@ -42,6 +47,11 @@ public class Target : MonoBehaviour
             _isBaseSelected = true;
             _renderer.material.color = Color.blue;
         }
+    }
+
+    private void FlagDestroyed()
+    {
+        IsFlagPlaced = false;
     }
 
     private void Update()
@@ -73,6 +83,7 @@ public class Target : MonoBehaviour
             if (_currentFlag == null)
             {
                 _currentFlag = Instantiate(_flagPrefab, position.Value, Quaternion.identity);
+                _currentFlag.FlagDestroyed += FlagDestroyed;
                 IsFlagPlaced = true;
             }
             else

@@ -10,6 +10,7 @@ public class Flag : MonoBehaviour
     public bool IsBuilt { get; private set; } = false;
 
     public event Action<Base> BaseBuilt;
+    public event Action FlagDestroyed;
 
     public void BuildBase()
     {
@@ -19,6 +20,8 @@ public class Flag : MonoBehaviour
 
         IsBuilt = true;
 
-        Destroy(gameObject);
+        FlagDestroyed?.Invoke();
+
+        gameObject.SetActive(false);
     }
 }
