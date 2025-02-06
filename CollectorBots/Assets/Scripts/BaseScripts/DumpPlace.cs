@@ -8,7 +8,7 @@ public class DumpPlace : MonoBehaviour
     public event Action CollectorPriceCollected;
     public event Action BasePriceCollected;
 
-    private bool _isHaveToPay = true;
+    private bool _isHaveToPay = false;
 
     public void UpdateCounter()
     {
@@ -24,6 +24,11 @@ public class DumpPlace : MonoBehaviour
         {
             BasePriceCollected?.Invoke();
         }
+    }
+
+    public void AllowPayment()
+    {
+        _isHaveToPay = true;    
     }
 
     public void CancelPayment()

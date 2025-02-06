@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,13 +9,16 @@ public class Flag : MonoBehaviour
 
     public bool IsBuilt { get; private set; } = false;
 
+    public event Action<Base> BaseBuilt;
+
     public void BuildBase()
     {
-        Debug.Log("Building");
-        Instantiate(_basePrefab, gameObject.transform.position, Quaternion.identity);
+        var newBase = Instantiate(_basePrefab, gameObject.transform.position, _basePrefab.transform.rotation);
 
-        //builtBase.transform.rotation = _basePrefab.transform.rotation;
+        BaseBuilt?.Invoke(newBase);
 
         IsBuilt = true;
+
+        Destroy(gameObject);
     }
 }

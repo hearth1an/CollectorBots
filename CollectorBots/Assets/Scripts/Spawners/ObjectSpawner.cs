@@ -28,6 +28,12 @@ public abstract class ObjectSpawner<T> : MonoBehaviour where T : MonoBehaviour
         ObjectSpawned?.Invoke(obj);
     }
 
+    public void SetStartSpawned()
+    {
+        int value = 0;
+        MaxSpawned = value;
+    }
+
     public virtual Vector3 GetRandomPosition()
     {
         int tryHits = 10;

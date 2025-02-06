@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Base : MonoBehaviour
@@ -22,10 +23,21 @@ public class Base : MonoBehaviour
         _dumpPlace.BasePriceCollected -= AssignBuildBase;
     }
 
+    public bool IsFlagPlaced()
+    {
+        return _target.IsFlagPlaced;
+    }
+
     private void AssignBuildBase()
     {
-        _collectorsSpawner.CreatedObjects[0].SetBuildingTarget(_target.GetFlagPosition());
+        Collector collector = _collectorsSpawner.CreatedObjects[0];
 
+        collector.SetBuildingTarget(_target.GetFlagPosition());
+
+        _collectorsSpawner.SetStartSpawned();
+        _collectorsSpawner.AssignCollector(collector);
+        
+        collector.gameObject.name = "Builder";
     }
 
     private void AssignResourcesToBots(Plant[] plants)

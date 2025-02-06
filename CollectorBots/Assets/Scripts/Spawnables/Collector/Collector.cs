@@ -8,6 +8,7 @@ public class Collector : MonoBehaviour, ICoroutineRunner
 
     private Base _base;
     private DumpPlace _dumpPlace;
+
     private CollectorMovement _movement;
     private ResourceCollector _resourceCollector;
 
@@ -39,7 +40,17 @@ public class Collector : MonoBehaviour, ICoroutineRunner
     {
         _itemSocket.PlantTaken -= ReturnToBase;
         _itemSocket.PlantDumped -= _dumpPlace.UpdateCounter;
-    }    
+    }
+    
+    public void Init(Base newBase)
+    {
+        _base = newBase;
+        _dumpPlace = newBase.DumpPlace;
+
+        Debug.Log(_dumpPlace.gameObject.name);
+
+        Debug.Log(_base.gameObject.name);
+    }
 
     public void SetTarget(Plant plant)
     {
@@ -49,6 +60,7 @@ public class Collector : MonoBehaviour, ICoroutineRunner
     public void SetBuildingTarget(Flag flag)
     {
         _resourceCollector.SetBuildTarget(flag, _movement);
+        flag.BaseBuilt += Init;
     }
 
     private void ReturnToBase()

@@ -5,8 +5,6 @@ public class CollectorsSpawner : ObjectSpawner<Collector>
 {
     [SerializeField] private Base _base;
 
-    public int MaxCollectors { get; private set; } = 5;
-
     private void Start()
     {
         _base.DumpPlace.CollectorPriceCollected += SpawnSingle;
@@ -15,6 +13,12 @@ public class CollectorsSpawner : ObjectSpawner<Collector>
     private void OnDestroy()
     {
         _base.DumpPlace.CollectorPriceCollected -= SpawnSingle;
+    }
+
+    public void AssignCollector(Collector collector)
+    {
+        SetStartSpawned();
+        AddObject(collector);
     }
 
     public override Collector GetObject()
@@ -26,9 +30,10 @@ public class CollectorsSpawner : ObjectSpawner<Collector>
     }
 
     public bool CanSpawnSingle()
-    {       
-        if (CreatedObjects.Count < MaxCollectors)
-        {            
+    {        
+        if (_base.IsFlagPlaced() == false)
+        {
+            _base.DumpPlace.AllowPayment();
             return true;
         }
 
@@ -44,7 +49,7 @@ public class CollectorsSpawner : ObjectSpawner<Collector>
         if (CanSpawnSingle())
         {
             Spawn(count);
-        }       
+        }
     }
 
     public override IEnumerator SpawnRoutine()

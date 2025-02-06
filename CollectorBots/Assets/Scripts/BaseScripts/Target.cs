@@ -8,8 +8,10 @@ public class Target : MonoBehaviour
 
     private Color _color;
     private Flag _currentFlag;
-    private bool _isFlagPlacementMode = false; // Режим установки флага
-    private bool _isBaseSelected = false; // Активна ли база
+    private bool _isFlagPlacementMode = false; 
+    private bool _isBaseSelected = false;
+
+    public bool IsFlagPlaced { get; private set; } = false;
 
     private void Awake()
     {
@@ -46,12 +48,13 @@ public class Target : MonoBehaviour
     {
         if (_isFlagPlacementMode && Input.GetMouseButtonDown(0))
         {
-            if (IsClickOnBase()) return; // Игнорируем клики на базу
+            if (IsClickOnBase()) return;
+
             if (TryPlaceFlag())
             {
                 _isFlagPlacementMode = false;
                 _isBaseSelected = false;
-                _renderer.material.color = _color;
+                _renderer.material.color = _color;                
             }
         }
     }
@@ -64,38 +67,46 @@ public class Target : MonoBehaviour
     private bool TryPlaceFlag()
     {
         Vector3? position = GetClickPositionOnGround();
+
         if (position.HasValue)
         {
             if (_currentFlag == null)
             {
                 _currentFlag = Instantiate(_flagPrefab, position.Value, Quaternion.identity);
+                IsFlagPlaced = true;
             }
             else
             {
                 _currentFlag.transform.position = position.Value;
             }
+
             return true;
         }
+
         return false;
     }
 
     private Vector3? GetClickPositionOnGround()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, _groundLayer))
         {
-            return hit.point; // Убираем проверку на близость
+            return hit.point; 
         }
+
         return null;
     }
 
     private bool IsClickOnBase()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            return hit.transform == this.transform; // Проверяем, был ли клик по этой базе
+            return hit.transform == this.transform;
         }
+
         return false;
     }
 }

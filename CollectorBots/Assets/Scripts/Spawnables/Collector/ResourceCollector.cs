@@ -34,11 +34,19 @@ public class ResourceCollector
 
     public void SetBuildTarget(Flag flag, CollectorMovement movement)
     {
-        _isBusy = true;
-        _isBuilding = true;
-        movement.GoTo(flag.transform.position);
+        if (flag != null)
+        {
+            _isBusy = true;
+            _isBuilding = true;
 
-        _coroutineRunner.StartCoroutine(BuildRoutine(flag, movement));
+            movement.GoTo(flag.transform.position);
+            _coroutineRunner.StartCoroutine(BuildRoutine(flag, movement));
+        }
+        else
+        {
+            _isBusy = false;
+            _isBuilding = false;
+        }
     }
 
     private IEnumerator CollectRoutine(Plant plant, CollectorMovement movement)
@@ -57,13 +65,13 @@ public class ResourceCollector
     }
 
     private IEnumerator BuildRoutine(Flag flag, CollectorMovement movement)
-    {   
-        while (flag.IsBuilt == false)
+    {  
+        while (flag.IsBuilt == false && flag != null)
         {
             if (movement.IsPathComplete())
-            {
-                Debug.Log("Build!!!!");
+            {                
                 flag.BuildBase();
+                _isBuilding = false;
             }
 
             yield return _delay;
