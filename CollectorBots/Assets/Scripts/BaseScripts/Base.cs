@@ -30,14 +30,19 @@ public class Base : MonoBehaviour
 
     private void AssignBuildBase()
     {
-        Collector collector = _collectorsSpawner.CreatedObjects[0];
+        int collectorIndex = 0;
 
-        collector.SetBuildingTarget(_target.GetFlagPosition());
+        if (_target.IsFlagPlaced)
+        {
+            Collector collector = _collectorsSpawner.CreatedObjects[collectorIndex];
 
-        _collectorsSpawner.SetStartSpawned();
-        _collectorsSpawner.AssignCollector(collector);
-        
-        collector.gameObject.name = "Builder";
+            collector.SetBuildingTarget(_target.GetFlagPosition());
+
+            _collectorsSpawner.SetStartSpawnedCount();
+            _collectorsSpawner.AssignCollector(collector);
+
+            collector.gameObject.name = "Builder";
+        }        
     }
 
     private void AssignResourcesToBots(Plant[] plants)

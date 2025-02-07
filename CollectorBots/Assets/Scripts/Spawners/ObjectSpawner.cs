@@ -28,7 +28,7 @@ public abstract class ObjectSpawner<T> : MonoBehaviour where T : MonoBehaviour
         ObjectSpawned?.Invoke(obj);
     }
 
-    public void SetStartSpawned()
+    public void SetStartSpawnedCount()
     {
         int value = 0;
         MaxSpawned = value;

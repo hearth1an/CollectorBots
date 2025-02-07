@@ -18,7 +18,7 @@ public class ResourcesCounter : MonoBehaviour
 
     public bool HaveResourcesForCollector()
     {
-        if (Value == _collectorPrice)
+        if (Value >= _collectorPrice)
         {
             return true;
         }            
@@ -39,6 +39,12 @@ public class ResourcesCounter : MonoBehaviour
     public void PayForCollector()
     {
         Value -= _collectorPrice;
+        CountUpdated?.Invoke(Value);
+    }
+
+    public void PayForBase()
+    {
+        Value -= _basePrice;
         CountUpdated?.Invoke(Value);
     }
 }

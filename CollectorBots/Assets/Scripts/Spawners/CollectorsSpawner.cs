@@ -17,7 +17,7 @@ public class CollectorsSpawner : ObjectSpawner<Collector>
 
     public void AssignCollector(Collector collector)
     {
-        SetStartSpawned();
+        SetStartSpawnedCount();
         AddObject(collector);
     }
 
@@ -30,9 +30,9 @@ public class CollectorsSpawner : ObjectSpawner<Collector>
     }
 
     public bool CanSpawnSingle()
-    {        
+    {
         if (_base.IsFlagPlaced() == false)
-        {
+        {            
             _base.DumpPlace.AllowPayment();
             return true;
         }

@@ -72,6 +72,7 @@ public class ResourceCollector
             {                
                 flag.BuildBase();
                 _isBuilding = false;
+                _isBusy = false;
             }
 
             yield return _delay;

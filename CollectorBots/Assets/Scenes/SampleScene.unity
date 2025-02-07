@@ -6044,7 +6044,7 @@ MonoBehaviour:
   Prefab: {fileID: -7126774827569635087, guid: 301263204507e8644924b5e8d25b88ee, type: 3}
   Radius: 2.5
   SpawnDelay: 2
-  MaxSpawned: 5
+  MaxSpawned: 10
   _minSpawned: 2
   _newSpawnAmount: 5
 --- !u!1001 &961707147
@@ -7382,19 +7382,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7798665215541385962, guid: 0cb2784c4b3fd274fa82030eb06ae935, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.98532486
+      value: 0.98417914
       objectReference: {fileID: 0}
     - target: {fileID: 7798665215541385962, guid: 0cb2784c4b3fd274fa82030eb06ae935, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.029378664
+      value: 0.029822327
       objectReference: {fileID: 0}
     - target: {fileID: 7798665215541385962, guid: 0cb2784c4b3fd274fa82030eb06ae935, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.15616187
+      value: -0.16322893
       objectReference: {fileID: 0}
     - target: {fileID: 7798665215541385962, guid: 0cb2784c4b3fd274fa82030eb06ae935, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.062332053
+      value: -0.0621164
       objectReference: {fileID: 0}
     - target: {fileID: 7798665215541385962, guid: 0cb2784c4b3fd274fa82030eb06ae935, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -7402,7 +7402,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7798665215541385962, guid: 0cb2784c4b3fd274fa82030eb06ae935, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -113.713
+      value: -18.98
       objectReference: {fileID: 0}
     - target: {fileID: 7798665215541385962, guid: 0cb2784c4b3fd274fa82030eb06ae935, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z

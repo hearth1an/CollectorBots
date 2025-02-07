@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Target : MonoBehaviour
 {
+    private const int MouseDown = 0;
+
     [SerializeField] private MeshRenderer _renderer;
     [SerializeField] private Flag _flagPrefab;
     [SerializeField] private LayerMask _groundLayer;
@@ -20,7 +22,10 @@ public class Target : MonoBehaviour
 
     private void OnDestroy()
     {
-        _currentFlag.FlagDestroyed -= FlagDestroyed;
+        if (_currentFlag != null)
+        {
+            _currentFlag.FlagDestroyed -= FlagDestroyed;
+        }        
     }
 
     private void OnMouseEnter()
@@ -52,11 +57,12 @@ public class Target : MonoBehaviour
     private void FlagDestroyed()
     {
         IsFlagPlaced = false;
+        Destroy(_currentFlag.gameObject);
     }
 
     private void Update()
     {
-        if (_isFlagPlacementMode && Input.GetMouseButtonDown(0))
+        if (_isFlagPlacementMode && Input.GetMouseButtonDown(MouseDown))
         {
             if (IsClickOnBase()) return;
 
@@ -84,6 +90,7 @@ public class Target : MonoBehaviour
             {
                 _currentFlag = Instantiate(_flagPrefab, position.Value, Quaternion.identity);
                 _currentFlag.FlagDestroyed += FlagDestroyed;
+
                 IsFlagPlaced = true;
             }
             else

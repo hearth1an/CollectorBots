@@ -8,21 +8,30 @@ public class DumpPlace : MonoBehaviour
     public event Action CollectorPriceCollected;
     public event Action BasePriceCollected;
 
-    private bool _isHaveToPay = false;
+    public bool _isHaveToPay;
 
     public void UpdateCounter()
     {
         _counter.Add();
 
-        if (_counter.HaveResourcesForCollector() && _isHaveToPay)
+        if (_counter.HaveResourcesForCollector())
         {
             CollectorPriceCollected?.Invoke();
-            _counter.PayForCollector();
+
+            if (_isHaveToPay)
+            {
+                _counter.PayForCollector();
+            }            
         }
 
         if (_counter.HaveResourcesForBase())
         {
             BasePriceCollected?.Invoke();
+
+            if (_isHaveToPay)
+            {
+                _counter.PayForBase();
+            }            
         }
     }
 
@@ -32,7 +41,7 @@ public class DumpPlace : MonoBehaviour
     }
 
     public void CancelPayment()
-    {
+    {        
         _isHaveToPay = false;
     }
 }

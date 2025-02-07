@@ -49,10 +49,6 @@ public class Collector : MonoBehaviour, ICoroutineRunner
 
         _itemSocket.PlantDumped -= _dumpPlace.UpdateCounter;
         _itemSocket.PlantDumped += _dumpPlace.UpdateCounter;
-
-        Debug.Log(_dumpPlace.gameObject.name);
-
-        Debug.Log(_base.gameObject.name);
     }
 
     public void SetTarget(Plant plant)
