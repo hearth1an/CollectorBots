@@ -16,6 +16,7 @@ public class ResourceCollector
     public bool IsBuilding => _isBuilding;
 
     public event Action<Plant> Collected;
+   
     public event Action Dumped;
 
     public ResourceCollector(ItemSocket itemSocket, ICoroutineRunner coroutineRunner)
@@ -69,8 +70,8 @@ public class ResourceCollector
         while (flag.IsBuilt == false && flag != null)
         {
             if (movement.IsPathComplete())
-            {                
-                flag.BuildBase();
+            {
+                flag.NotifyBuild();
                 _isBuilding = false;
                 _isBusy = false;
             }

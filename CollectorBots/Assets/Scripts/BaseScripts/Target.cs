@@ -13,6 +13,7 @@ public class Target : MonoBehaviour
     private bool _isFlagPlacementMode = false; 
     private bool _isBaseSelected = false;
 
+    public Flag CurrentFlag => _currentFlag;
     public bool IsFlagPlaced { get; private set; } = false;
 
     private void Awake()

@@ -8,7 +8,7 @@ public class DumpPlace : MonoBehaviour
     public event Action CollectorPriceCollected;
     public event Action BasePriceCollected;
 
-    public bool _isHaveToPay;
+    private bool _isHaveToPay;
 
     public void UpdateCounter()
     {

@@ -11,9 +11,9 @@ public abstract class ObjectSpawner<T> : MonoBehaviour where T : MonoBehaviour
     [SerializeField] protected float SpawnDelay;
     [SerializeField] protected int MaxSpawned;
 
-    public event Action<T> ObjectSpawned;
-
     private readonly List<T> _createdObjects = new List<T>();
+
+    public event Action<T> ObjectSpawned;    
 
     public IReadOnlyList<T> CreatedObjects => _createdObjects;
 

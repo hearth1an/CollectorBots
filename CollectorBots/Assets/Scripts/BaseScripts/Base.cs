@@ -5,11 +5,14 @@ public class Base : MonoBehaviour
 {
     [SerializeField] private Scanner _scanner;
     [SerializeField] private CollectorsSpawner _collectorsSpawner;
+    [SerializeField] private BaseSpawner _baseSpawner;
     [SerializeField] private DumpPlace _dumpPlace;
     [SerializeField] private Target _target;
 
     public DumpPlace DumpPlace => _dumpPlace;
     public Scanner Scanner => _scanner;
+    public Target Target => _target;
+
 
     private void Start()
     {
@@ -37,6 +40,8 @@ public class Base : MonoBehaviour
             Collector collector = _collectorsSpawner.CreatedObjects[collectorIndex];
 
             collector.SetBuildingTarget(_target.GetFlagPosition());
+
+            _baseSpawner.Init(_target.CurrentFlag, collector);
 
             _collectorsSpawner.SetStartSpawnedCount();
             _collectorsSpawner.AssignCollector(collector);

@@ -3,18 +3,14 @@ using UnityEngine;
 
 public class Flag : MonoBehaviour
 {
-    [SerializeField] private Base _basePrefab;
-
     public bool IsBuilt { get; private set; } = false;
 
-    public event Action<Base> BaseBuilt;
+    public event Action<Flag> BaseBuilt;
     public event Action FlagDestroyed;
 
-    public void BuildBase()
+    public void NotifyBuild()
     {
-        var newBase = Instantiate(_basePrefab, gameObject.transform.position, _basePrefab.transform.rotation);
-
-        BaseBuilt?.Invoke(newBase);
+        BaseBuilt?.Invoke(this);
 
         IsBuilt = true;
 

@@ -12,11 +12,12 @@ public class Collector : MonoBehaviour, ICoroutineRunner
     private CollectorMovement _movement;
     private ResourceCollector _resourceCollector;
 
+    public event Action<Plant> Collected;
+    public event Action<Collector> CanBuild;
+
     public ResourceCollector ResourceCollector => _resourceCollector;
 
-    public bool IsBusy => _resourceCollector.IsBusy;
-
-    public event Action<Plant> Collected;
+    public bool IsBusy => _resourceCollector.IsBusy;    
 
     public void Initialize(Base baseObject) => _base = baseObject;
 
@@ -42,10 +43,12 @@ public class Collector : MonoBehaviour, ICoroutineRunner
         _itemSocket.PlantDumped -= _dumpPlace.UpdateCounter;
     }
     
-    public void Init(Base newBase)
+    public void Init(Base newBase, Flag flag)
     {
+        CanBuild?.Invoke(this);
+
         _base = newBase;
-        _dumpPlace = newBase.DumpPlace;
+        _dumpPlace = newBase.DumpPlace;        
 
         _itemSocket.PlantDumped -= _dumpPlace.UpdateCounter;
         _itemSocket.PlantDumped += _dumpPlace.UpdateCounter;
@@ -59,7 +62,6 @@ public class Collector : MonoBehaviour, ICoroutineRunner
     public void SetBuildingTarget(Flag flag)
     {
         _resourceCollector.SetBuildTarget(flag, _movement);
-        flag.BaseBuilt += Init;
     }
 
     private void ReturnToBase()
