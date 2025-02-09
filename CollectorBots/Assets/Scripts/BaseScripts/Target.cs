@@ -5,8 +5,8 @@ public class Target : MonoBehaviour
     private const int MouseDown = 0;
 
     [SerializeField] private MeshRenderer _renderer;
-    [SerializeField] private Flag _flagPrefab;
     [SerializeField] private LayerMask _groundLayer;
+    [SerializeField] private FlagPlacer _flagPlacer;
 
     private Color _color;
     private Flag _currentFlag;
@@ -76,7 +76,7 @@ public class Target : MonoBehaviour
         }
     }
 
-    public Flag GetFlagPosition()
+    public Flag GetFlag()
     {
         return _currentFlag;
     }
@@ -89,7 +89,7 @@ public class Target : MonoBehaviour
         {
             if (_currentFlag == null)
             {
-                _currentFlag = Instantiate(_flagPrefab, position.Value, Quaternion.identity);
+                _currentFlag = _flagPlacer.Spawn(position.Value);
                 _currentFlag.FlagDestroyed += FlagDestroyed;
 
                 IsFlagPlaced = true;

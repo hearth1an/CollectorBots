@@ -13,9 +13,10 @@ public class Base : MonoBehaviour
     public DumpPlace DumpPlace => _dumpPlace;
     public Scanner Scanner => _scanner;
 
-    public void Initialize(BaseSpawner baseSpawner) => _baseSpawner = baseSpawner;
+    public void Initialize(BaseSpawner baseSpawner) =>
+        _baseSpawner = baseSpawner;
 
-    private void Start()
+    private void OnEnable()
     {
         _scanner.ResourcesDetected += AssignResourcesToBots;
         _dumpPlace.BasePriceCollected += AssignBuildBase;
@@ -42,7 +43,7 @@ public class Base : MonoBehaviour
 
             Collector collector = _collectorsSpawner.CreatedObjects[collectorIndex];
 
-            collector.SetBuildingTarget(_target.GetFlagPosition());            
+            collector.SetBuildingTarget(_target.GetFlag());            
 
             _collectorsSpawner.SetStartSpawnedCount();
             _collectorsSpawner.AssignCollector(collector);

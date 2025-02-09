@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ScannerAnimatorController : MonoBehaviour
+public class ScannerAnimator : MonoBehaviour
 {
     [SerializeField] private ParticleSystem _particleSystem;
 

@@ -7,7 +7,7 @@ public class Scanner : MonoBehaviour
     [SerializeField] private float _scanRadius = 10f;
     [SerializeField] private LayerMask _resourceLayer;
     [SerializeField] private float _scanDelay = 5f;
-    [SerializeField] private ScannerAnimatorController _animController;
+    [SerializeField] private ScannerAnimator _scannerAnimator;
 
     public event Action<Plant[]> ResourcesDetected;
 
@@ -22,7 +22,7 @@ public class Scanner : MonoBehaviour
 
         while (enabled)
         {            
-            _animController.PlayAnimation();
+            _scannerAnimator.PlayAnimation();
 
             Plant[] plants = ScanArea();
             

@@ -6,9 +6,10 @@ public class ItemSocket : MonoBehaviour
     [SerializeField] private Transform _socket;
 
     public Plant _currentPlant = null;
-    
+    private Vector3 _plantSize = new Vector3(10, 10, 10);
+
     public event Action PlantTaken;
-    public event Action PlantDumped;
+    public event Action PlantDumped;    
 
     public bool IsOccupied { get; private set; } = false;
 
@@ -18,7 +19,7 @@ public class ItemSocket : MonoBehaviour
         plant.transform.position = _socket.transform.position;        
 
         _currentPlant = plant;
-        _currentPlant.transform.localScale = new Vector3(10, 10, 10);
+        _currentPlant.transform.localScale = _plantSize;
         
         IsOccupied = true;
 
