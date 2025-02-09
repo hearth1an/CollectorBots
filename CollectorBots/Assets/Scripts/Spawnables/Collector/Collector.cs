@@ -13,7 +13,6 @@ public class Collector : MonoBehaviour, ICoroutineRunner
     private ResourceCollector _resourceCollector;
 
     public event Action<Plant> Collected;
-    public event Action<Collector> CanBuild;
 
     public ResourceCollector ResourceCollector => _resourceCollector;
 
@@ -43,10 +42,8 @@ public class Collector : MonoBehaviour, ICoroutineRunner
         _itemSocket.PlantDumped -= _dumpPlace.UpdateCounter;
     }
     
-    public void Init(Base newBase, Flag flag)
+    public void Init(Base newBase)
     {
-        CanBuild?.Invoke(this);
-
         _base = newBase;
         _dumpPlace = newBase.DumpPlace;        
 

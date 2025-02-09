@@ -119,7 +119,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8044924424223874599}
   m_LocalRotation: {x: 0.064394735, y: -0.7959713, z: -0.024518063, w: 0.6014}
-  m_LocalPosition: {x: 0, y: 0.6, z: -0.11}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -146,6 +146,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scanner: {fileID: 5154163664632046881}
   _collectorsSpawner: {fileID: 7159070519322177230}
+  _baseSpawner: {fileID: 0}
   _dumpPlace: {fileID: 4709560111399081007}
   _target: {fileID: 5562343668616237942}
 --- !u!1 &8913964032000237757

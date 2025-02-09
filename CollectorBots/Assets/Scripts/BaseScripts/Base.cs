@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,8 +12,8 @@ public class Base : MonoBehaviour
 
     public DumpPlace DumpPlace => _dumpPlace;
     public Scanner Scanner => _scanner;
-    public Target Target => _target;
 
+    public void Initialize(BaseSpawner baseSpawner) => _baseSpawner = baseSpawner;
 
     private void Start()
     {
@@ -37,14 +38,16 @@ public class Base : MonoBehaviour
 
         if (_target.IsFlagPlaced)
         {
+            _dumpPlace.AllowPayment();
+
             Collector collector = _collectorsSpawner.CreatedObjects[collectorIndex];
 
-            collector.SetBuildingTarget(_target.GetFlagPosition());
-
-            _baseSpawner.Init(_target.CurrentFlag, collector);
+            collector.SetBuildingTarget(_target.GetFlagPosition());            
 
             _collectorsSpawner.SetStartSpawnedCount();
             _collectorsSpawner.AssignCollector(collector);
+
+            _baseSpawner.Init(_target.CurrentFlag, collector);
 
             collector.gameObject.name = "Builder";
         }        

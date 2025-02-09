@@ -6,7 +6,7 @@ public class BaseSpawner : ObjectSpawner<Base>
     private Flag _flag;
 
     public override Base GetObject()
-    {
+    {       
         if (_flag != null)
         {
             var newBase = Instantiate(Prefab, _flag.gameObject.transform.position, Prefab.transform.rotation);
@@ -38,12 +38,9 @@ public class BaseSpawner : ObjectSpawner<Base>
     {
         _flag = flag;
 
-        collector.CanBuild += BuildBase;
-        collector.Init(GetObject(), flag);
-    }
+        Base newBase = GetObject();
+        collector.Init(newBase);
 
-    private void BuildBase(Collector collector)
-    {     
-        collector.CanBuild -= BuildBase;
+        newBase.Initialize(this);        
     }
 }

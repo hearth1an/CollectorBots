@@ -43,11 +43,9 @@ public class ResourceCollector
             movement.GoTo(flag.transform.position);
             _coroutineRunner.StartCoroutine(BuildRoutine(flag, movement));
         }
-        else
-        {
-            _isBusy = false;
-            _isBuilding = false;
-        }
+
+        _isBusy = false;
+        _isBuilding = false;
     }
 
     private IEnumerator CollectRoutine(Plant plant, CollectorMovement movement)
