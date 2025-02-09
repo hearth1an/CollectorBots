@@ -944,6 +944,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4646933745565138, guid: 4983f395b2610de4e9f688a87bbd9af9, type: 3}
   m_PrefabInstance: {fileID: 1491855924}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &796869935 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1500617123460160325, guid: 0cb2784c4b3fd274fa82030eb06ae935, type: 3}
+  m_PrefabInstance: {fileID: 2924238871633032149}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97b03201fb59e1249830708fa24e16d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &846906206
 GameObject:
   m_ObjectHideFlags: 0
@@ -7409,6 +7420,10 @@ PrefabInstance:
       propertyPath: _collectorsSpawner
       value: 
       objectReference: {fileID: 1291415473}
+    - target: {fileID: 5154163664632046881, guid: 0cb2784c4b3fd274fa82030eb06ae935, type: 3}
+      propertyPath: _scannerAnimator
+      value: 
+      objectReference: {fileID: 796869935}
     - target: {fileID: 7159070519322177230, guid: 0cb2784c4b3fd274fa82030eb06ae935, type: 3}
       propertyPath: _base
       value: 
